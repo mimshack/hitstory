@@ -10,7 +10,7 @@
   
   "browser_action": {
       "default_icon": "images/icon.jpg",           // optional
-      "default_title": "Google Mail",      // optional; shown in tooltip
+      "default_title": "HistYoury",      // optional; shown in tooltip
       "default_popup": "popup.html"        // optional
   },
 
