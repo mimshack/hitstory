@@ -1,0 +1,31 @@
+* {
+	padding:0px;
+	margin:0px;
+}
+header,section,nav,aside,footer {
+	display:block;
+}
+#wrapper {
+	margin: 5px 5px;
+	width: 300px; /* according to design's width*/ 
+	height: 350px;
+}
+
+/*---------------------------------*/
+nav {
+	background-color: #54B1F7;
+	height: 15%;
+
+}
+section {
+	height: 70%;
+}
+footer {
+	background-color: #54B1F7;
+	height: 15%;
+}
+
+
+.clear {
+	clear:both;
+}

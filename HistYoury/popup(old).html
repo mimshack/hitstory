@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="css/panel.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="lib/vendor/bootstrap/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/panel" src="./js/panel.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="./lib/vendor/jquery-1.7.2.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lib/panel" src="./lib/panel.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lib/i18n" src="./lib/i18n.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tpl/panel" src="./templates/precompiled/panel.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tpl/_panel_app" src="./templates/precompiled/_panel_app.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lib/utils" src="./lib/utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="./lib/vendor/underscore-1.4.3.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bootstrap" src="./lib/vendor/bootstrap/bootstrap.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="./lib/vendor/backbone-0.9.10.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="parseuri" src="./lib/vendor/parseuri.js"></script>
+	</head>
+	<body>
+
+		<div id="content">
+			<div>
+				<div id="tooltip" class="message"></div>
+				<div id="close-panel"></div>
+				<div id="header">
+					<div id="header-icon"></div>
+					<div id="header-text">
+						<div id="ghostery-findings">
+							<div id="ghostery-findings-text" class="ellipsis">
+								Page not scanned
+							</div>
+							<div id="website-info" style="display: none;">
+								<div id="website-url" class="ellipsis"></div>
+								<span id="website-whitelisted"> <span class="white">is</span> whitelisted </span>
+							</div>
+						</div>
+					</div>
+					<div class="tooltip" id="settings-button" title="Settings"></div>
+				</div>
+
+				<div id="settings" class="no-select">
+					<div class="settings-buttons" id="options-button">
+						Options
+					</div>
+					<div class="settings-buttons" id="support-button">
+						Support
+					</div>
+					<div class="settings-buttons" id="feedback-button">
+						Feedback
+					</div>
+					<div class="settings-buttons" id="share-button">
+						Share
+					</div>
+				</div>
+
+				<div id="apps-div" style="bottom: 55px;">
+					<div class="no-trackers">
+						<div class="vertical-center">
+							This page was not scanned.
+							<br>
+							Ghostery only scans "http" and "https" pages, and only pages loaded after Ghostery was installed.
+						</div>
+					</div>
+				</div>
+
+				<div id="reload" style="height: 0px; padding: 0px;">
+					Please <span>reload</span> the page to see your changes.<div id="reload-close"></div>
+				</div>
+
+				<div id="footer" class="no-select">
+					<div unselectable="on" class="footer-button ellipsis left disabled" id="pause-blocking-button" style="margin-left: 7px;" title="Click here to temporarily stop all blocking.">
+						Pause Blocking
+					</div>
+					<div unselectable="on" class="footer-button ellipsis left disabled" id="whitelisting-button" title="Click here to allow all trackers on the current site.">
+						Whitelist Site
+					</div>
+					<div class="footer-button left tooltip down" id="help-button" title="Help"></div>
+				</div>
+
+				<div id="tutorial-container" style="display: block;">
+
+					<div class="tutorial-arrow off" id="tutorial-arrow-left"></div>
+					<div class="tutorial-arrow" id="tutorial-arrow-right"></div>
+
+					<div id="tutorial-controls" class="no-select">
+						<div class="tutorial-control on" id="tutorial-control-1"></div>
+						<div class="tutorial-control" id="tutorial-control-2"></div>
+						<div class="tutorial-control" id="tutorial-control-3"></div>
+						<div class="tutorial-control" id="tutorial-control-4"></div>
+						<div class="tutorial-control" id="tutorial-control-5"></div>
+						<div class="tutorial-control" id="tutorial-control-6"></div>
+						<div class="tutorial-control" id="tutorial-control-7"></div>
+						<div class="tutorial-control" id="tutorial-control-8"></div>
+						<div class="tutorial-control" id="tutorial-control-9"></div>
+						<div class="tutorial-control" id="tutorial-control-10"></div>
+					</div>
+
+					<div id="tutorial-close">
+						Close Tutorial
+					</div>
+
+					<div id="tutorial-screens">
+
+						<div id="tutorial-screen-1" class="tutorial-screen" style="display: table;">
+							<div class="vertical-center">
+								<div class="title-large">
+									Welcome to the Findings Panel Tutorial!
+								</div>
+								<div class="text-large">
+									Click on the arrow to the right to continue the tutorial.
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-2" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Findings Panel
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<img class="center-image" src="images/panel/tutorial/panel.png" style="height:100px; width:100px">
+									<div class="text-large">
+										The Findings Panel is the place to see and control trackers on pages you visit.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-3" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Controlling Trackers
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<img class="center-image" src="images/panel/tutorial/blocking_controls.png">
+									<div class="text-large">
+										To block or allow trackers, use the two buttons to the right of each tracker.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-4" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Blocking Trackers
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<div class="blocking-control-image">
+										<img class="left-image right" src="images/panel/tutorial/indicator_cross_red.png">
+									</div>
+									<div class="text-large">
+										<span class="red">Ghostery will block the tracker</span> if the blocking toggle is red and positioned to the right.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-5" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Allowing Trackers
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<div class="blocking-control-image">
+										<img class="left-image" src="images/panel/tutorial/indicator_cross_blue.png">
+									</div>
+									<div class="text-large">
+										<span class="blue">Ghostery will allow the tracker</span> if the blocking toggle is blue and positioned to the left. This is the default setting for all trackers.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-6" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Making an Exception
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<div class="blocking-control-image right-only">
+										<img class="right-image" src="images/panel/tutorial/indicator_check_green.png">
+									</div>
+									<div class="text-large">
+										<span class="green">Ghostery will always allow the tracker on the current site</span> if the checkmark button is enabled (green).
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-7" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Pausing Blocking
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<div class="blocking-control-image">
+										<img class="left-image right" src="images/panel/tutorial/indicator_cross_yellow.png">
+									</div>
+									<div class="text-large">
+										<span class="yellow">Ghostery will temporarily stop all blocking</span> if you press the <span class="tutorial-footer-button">Pause Blocking</span> button. Press the button again to resume blocking.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-8" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Whitelisting a Site
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<div class="blocking-control-image">
+										<img class="left-image right" src="images/panel/tutorial/indicator_cross_green.png">
+									</div>
+									<div class="text-large">
+										<span class="green">Ghostery will allow all trackers on the current site</span> if you press the <span class="tutorial-footer-button">Whitelist Site</span> button. Press the button again to remove the current site from the whitelist.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-9" class="tutorial-screen" style="display: none;">
+							<div class="title-small">
+								Visiting the Options Page
+							</div>
+							<div class="text-center">
+								<div class="vertical-center">
+									<img class="center-image" src="images/panel/tutorial/settings.png">
+									<div class="text-large">
+										To visit Ghostery's options page, click on the <span class="settings-button"></span> button, and then click the <span class="settings-buttons">Options</span> button.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="tutorial-screen-10" class="tutorial-screen" style="display: none;">
+							<div class="vertical-center">
+								<div class="title-large">
+									Enjoy Ghostery!
+								</div>
+								<div class="text-small">
+									You can revisit this tutorial at any time by clicking on the <span class="help-button"></span> button.
+								</div>
+								<br>
+								<div class="text-small">
+									Click <a id="tutorial-youtube" target="_blank" href="http://www.ghostery.com/help/panel/intro">here</a> to watch a video introduction to Ghostery's findings panel.
+								</div>
+								<br>
+								<div class="text-small">
+									Questions? Feedback? Visit our <a id="tutorial-support" target="_blank" href="http://www.ghostery.com/feedback">support forums</a>, or e-mail us at <a id="tutorial-email" target="_blank" href="mailto:support@ghostery.com">support@ghostery.com</a>.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="require_config.js"></script>
+		<script src="lib/vendor/require.js" data-main="js/panel"></script>
+
+	</body>
+</html>
