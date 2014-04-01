@@ -1,0 +1,17 @@
+@import url(//fonts.googleapis.com/earlyaccess/alefhebrew.css);
+
+* { 
+  font-family: "Alef Hebrew" !important;
+}
+
+#content {
+	font-size: 1.2em;
+}
+
+p:hover {
+	outline: 3px double #f00;
+}
+
+.make-red {
+	color: red !important;
+}
