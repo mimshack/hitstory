@@ -9,6 +9,7 @@ header,section,nav,aside,footer {
 	margin: 5px 5px;
 	width: 300px; /* according to design's width*/ 
 	height: 350px;
+	background-color: #FFFEE8;
 }
 
 /*---------------------------------*/
