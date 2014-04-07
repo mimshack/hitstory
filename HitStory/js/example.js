@@ -1,27 +1,26 @@
-$( "p" ).click(function() {
-  $( this ).toggleClass( "make-red" );
+$("p").click(function() {
+	$(this).toggleClass("make-red");
 });
-
 
 $(document).ready(function() {
 	saveHistory();
 });
 /*
-{
-"page" [
-{ "url":"urlurl" },
-{ "open":"openopen" }, 
-{ "live":"livelive" }, 
-{"title":"titletitle" },
-{ "parent":"parentparent" },
-{ "children":"childrenchildren" }
+ {
+ "page" [
+ { "url":"urlurl" },
+ { "open":"openopen" },
+ { "live":"livelive" },
+ {"title":"titletitle" },
+ { "parent":"parentparent" },
+ { "children":"childrenchildren" }
 
-];
-}
-*/
+ ];
+ }
+ */
 function saveHistory() {
-var d = new Date();
-var n = d.getTime();
+	var d = new Date();
+	var n = d.getTime();
 	chrome.storage.local.set({
 		n : 'first',
 		'key2' : 'second',
@@ -33,8 +32,7 @@ var n = d.getTime();
 		console.debug('Settings saved');
 	});
 
-	
-	var storageSize=1;
+	var storageSize = 1;
 	var total = 0;
 	for (var x in localStorage) {
 		storageSize++;
@@ -43,13 +41,12 @@ var n = d.getTime();
 		console.log(x + "=" + amount.toFixed(2) + " MB");
 	}
 	console.log("Total: " + total.toFixed(2) + " MB");
-	alert(storageSize);
 
-var getItems = [];
-	for (var i = 0; i<=storageSize; i++) {
+	var getItems = [];
+	for (var i = 0; i <= storageSize; i++) {
 		getItems.push('key' + i);
 	}
-	
+
 	chrome.storage.local.get(getItems, function(items) {
 		var keys = Object.keys(items);
 		for (var i = 0, end = keys.length; i < end; i++) {
@@ -58,7 +55,5 @@ var getItems = [];
 		}
 	});
 
-    
 }
-
 
