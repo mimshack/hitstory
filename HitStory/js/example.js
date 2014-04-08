@@ -81,7 +81,7 @@ function saveHistory() {
 	}, function() {
 		// you can use strings instead of objects
 		// if you don't  want to define default values
-		console.log("SAVED");
+		console.log("SAVED"); 
 	});
 	chrome.storage.local.get('userKeyIds', function(result) {
 		console.log(result.userKeyIds[0]);
