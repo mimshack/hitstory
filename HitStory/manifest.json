@@ -4,8 +4,11 @@
   "version": "1.0",
 
   "permissions": [
-    "activeTab", "tabs", "<all_urls>","storage","browsingData"
-
+    "activeTab",
+    "tabs" ,
+    "<all_urls>",
+    "storage",
+    "browsingData"
   ],
   
   "browser_action": {
