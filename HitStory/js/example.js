@@ -72,19 +72,19 @@ function saveHistory() {
 	*/
 
 	// try to save a json type -- not working as needed
-	var userKeyIds = [{
-		"url" : "avishay",
-		"name" : "hajbi"
-	}];
+	var userKeyIds = {
+		url : "avishay",
+		name : "hajbi"
+	};
 	chrome.storage.local.set({
-		userKeyIds : []
+		userKeyIds : userKeyIds
 	}, function() {
 		// you can use strings instead of objects
 		// if you don't  want to define default values
 		console.log("SAVED"); 
 	});
 	chrome.storage.local.get('userKeyIds', function(result) {
-		console.log(result.userKeyIds[0]);
+		console.log(result['userKeyIds'].name);
 		console.log(result.userKeyIds.name);
 		console.log(result.name);
 		console.log(result[0]);
