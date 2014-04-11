@@ -6,7 +6,7 @@
 "browser_action": {
        "default_icon": "images/icon-19.png",  
        "default_title": "HitStory",      // optional; shown in tooltip
-       "default_popup": "panel.html"        // optional
+       "default_popup": "page.html"        // optional
   },
   "permissions": [
     "activeTab",
@@ -27,8 +27,8 @@
   },
   "content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["js/jquery-1.10.2.min.js","js/underscore.min.js","js/example.js"],
-		"css": ["css/main.css"]
+		"js": ["js/jquery-1.10.2.min.js","js/underscore.min.js","js/saveHistory.js"],
+		"css": ["css/page.css"]
   }],
   "manifest_version": 2
 }

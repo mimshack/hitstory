@@ -1,23 +1,15 @@
-$("p").click(function() {
-	$(this).toggleClass("make-red");
-});
+// $("p").click(function() {
+	// $(this).toggleClass("make-red");
+// });
 
 $(document).ready(function() {
 	saveHistory();
-	capturePage();
 });
-
-function capturePage(){
-
-}
-
-  
-
 
 // store data in chrome DB
 function saveHistory() {
 
-	/*	// dispaly DB size in MB
+	/*	// display DB size in MB
 	var storageSize = 1;
 	var total = 0;
 	for (var x in localStorage) {
@@ -46,6 +38,9 @@ function saveHistory() {
 		console.log(result.userKeyIds.name);
 	});
 }
+
+
+/* another exmaples */
 
 /*	// chrome storage array example
  var links = {'one': 1, 'two': 2 };
