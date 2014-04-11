@@ -3,34 +3,32 @@
   "description": "save history pages hierarchy.",
   "version": "1.0",
 
-  "permissions": [
-    "activeTab",
-    "tabs" ,
-    "<all_urls>",
-    "storage",
-    "browsingData"
-  ],
-  
-  "browser_action": {
-       "default_icon": {
-	  		"19": "images/icon-19.png",           // optional
-	  		"48": "images/icon-48.png",
-	  		"128": "images/icon-19.png"         // optional
-	   },
+"browser_action": {
+       "default_icon": "images/icon-19.png",  
        "default_title": "HitStory",      // optional; shown in tooltip
        "default_popup": "panel.html"        // optional
   },
-
+  "permissions": [
+    "activeTab",
+    "tabs" ,
+    "storage",
+    "browsingData",
+    "notifications",
+    "http://*/*",
+    "https://*/*"
+  ],
+   "icons": {
+    	"19": "images/icon-19.png",           // optional
+	  	"48": "images/icon-48.png",
+	  	"128": "images/icon-19.png"         // optional
+  },
   "omnibox": { 
   	   "keyword" : "hitstory" 
   },
- 
-
   "content_scripts": [{
-		"matches": ["<all_urls>"],
-		"js": ["js/jquery-1.10.2.min.js","js/example.js"],
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["js/jquery-1.10.2.min.js","js/underscore.min.js","js/example.js"],
 		"css": ["css/main.css"]
   }],
-
   "manifest_version": 2
 }
