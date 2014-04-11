@@ -166,10 +166,11 @@ function openPage() {
         name = '';
     }
     name = 'screencapture' + name + '.png';
-
+    
     function onwriteend() {
         // open the file that now contains the blob
         window.open('filesystem:chrome-extension://' + chrome.i18n.getMessage('@@extension_id') + '/temporary/' + name);
+        
     }
 
     function errorHandler() {
