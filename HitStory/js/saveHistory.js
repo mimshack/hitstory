@@ -1,46 +1,72 @@
-// $("p").click(function() {
-	// $(this).toggleClass("make-red");
-// });
+var databaseSize= {
+	size:0
+};
 
 $(document).ready(function() {
+	prePageLoad();
 	saveHistory();
-
 });
+
+function prePageLoad(){
+		chrome.storage.local.get(databaseSize, function(result) {
+			console.log("get db size "+result['databaseSize']);		
+		if (result['databaseSize'] != 0 && result['databaseSize'] != null )
+			databaseSize.size = result['databaseSize']+1;
+		else databaseSize.size = 0;
+		});
+}
+function changeDBsize(){
+	chrome.storage.local.set({
+		databaseSize : databaseSize
+	}, function() {
+		// you can use strings instead of objects
+		// if you don't  want to define default values
+		console.log("DB SIZE SAVED "+databaseSize.size);
+	});
+}
 
 
 // store data in chrome DB
 function saveHistory() {
-
-	/*	// display DB size in MB
-	var storageSize = 1;
-	var total = 0;
-	for (var x in localStorage) {
-	storageSize++;
-	var amount = (localStorage[x].length * 2) / 1024 / 1024;
-	total += amount;
-	console.log(x + "=" + amount.toFixed(2) + " MB");
-	}
-	console.log("Total: " + total.toFixed(2) + " MB");
-	*/
-
-	// try to save a json type --  working as needed
-	var userKeyIds = {
+	var jsonName = databaseSize.size;
+	
+	// save json type
+	var jsonName = {
 		url : "avishay",
 		name : "hajbi"
 	};
+	
+	
+	// store into data base
 	chrome.storage.local.set({
-		userKeyIds : userKeyIds
+		jsonName : databaseSize
 	}, function() {
 		// you can use strings instead of objects
 		// if you don't  want to define default values
+		changeDBsize();
 		console.log("SAVED");
 	});
-	chrome.storage.local.get('userKeyIds', function(result) {
-		console.log(result['userKeyIds'].url);
-		console.log(result.userKeyIds.name);
-	});
+
+	// read from data base
+	for (var i = 0; i < databaseSize.size; i++) {
+		chrome.storage.local.get(i, function(result) {
+			console.log(result['i'].url);
+			console.log(result.i.name);
+		});
+	}
 }
 
+/*	// display DB size in MB
+ var storageSize = 1;
+ var total = 0;
+ for (var x in localStorage) {
+ storageSize++;
+ var amount = (localStorage[x].length * 2) / 1024 / 1024;
+ total += amount;
+ console.log(x + "=" + amount.toFixed(2) + " MB");
+ }
+ console.log("Total: " + total.toFixed(2) + " MB");
+ */
 
 /* another exmaples */
 
@@ -98,6 +124,5 @@ function saveHistory() {
  console.debug(key + ' => ' + items[key]);
  }
  });
-*/
-
+ */
 
