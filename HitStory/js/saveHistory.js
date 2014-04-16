@@ -4,7 +4,9 @@
 
 $(document).ready(function() {
 	saveHistory();
+
 });
+
 
 // store data in chrome DB
 function saveHistory() {
