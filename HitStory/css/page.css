@@ -29,7 +29,7 @@ footer {
 */
 
 body {
-    font: normal 12px/16px helvetica,aria,sans-serif;
+    /*font: normal 12px/16px helvetica,aria,sans-serif;*/
 }
 div,p { margin: 0; padding: 0; }
 
@@ -67,7 +67,7 @@ a:active { color: #000; }
     width: 0%;
     background: #fff url(loader.gif) scroll no-repeat center right;
 }
-p { word-wrap: break-word; }
+/*p { word-wrap: break-word; }*/
 
 .clear {
 	clear:both;
