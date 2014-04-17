@@ -1,6 +1,6 @@
-var databaseSize= {
-	size:0
-};
+var databaseSize = {
+			size:0
+		};
 
 $(document).ready(function() {
 	prePageLoad();
@@ -8,14 +8,22 @@ $(document).ready(function() {
 });
 
 function prePageLoad(){
+
 		chrome.storage.local.get(databaseSize, function(result) {
-			console.log("get db size "+result['databaseSize']);		
-		if (result['databaseSize'] != 0 && result['databaseSize'] != null )
-			databaseSize.size = result['databaseSize']+1;
-		else databaseSize.size = 0;
+			console.log("get db size "+result['size']);	
+		if (result == null ) 
+			databaseSize.size = 0;	
+		else if (result['size'] == 0 ){
+			databaseSize.size += result['size'];
+		}
+		else databaseSize.size = 1;
 		});
 }
 function changeDBsize(){
+	chrome.storage.local.get(databaseSize, function(result) {
+			databaseSize.size += 1;
+		});
+		
 	chrome.storage.local.set({
 		databaseSize : databaseSize
 	}, function() {
@@ -28,8 +36,7 @@ function changeDBsize(){
 
 // store data in chrome DB
 function saveHistory() {
-	var jsonName = databaseSize.size;
-	
+	var jsonName = databaseSize.size.toString();
 	// save json type
 	var jsonName = {
 		url : "avishay",
@@ -39,19 +46,17 @@ function saveHistory() {
 	
 	// store into data base
 	chrome.storage.local.set({
-		jsonName : databaseSize
+		jsonName : jsonName
 	}, function() {
-		// you can use strings instead of objects
-		// if you don't  want to define default values
 		changeDBsize();
 		console.log("SAVED");
 	});
 
 	// read from data base
-	for (var i = 0; i < databaseSize.size; i++) {
-		chrome.storage.local.get(i, function(result) {
-			console.log(result['i'].url);
-			console.log(result.i.name);
+	for (var i = 1; i <= databaseSize.size; i++) {
+		chrome.storage.local.get(i.toString(), function(result) {
+			console.log(result['url']);
+			console.log(result.name);
 		});
 	}
 }
