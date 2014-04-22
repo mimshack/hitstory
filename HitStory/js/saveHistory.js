@@ -1,64 +1,71 @@
-var databaseSize = {
-			size:0
-		};
+var database = {
+	size : 0
+};
 
 $(document).ready(function() {
 	prePageLoad();
-	saveHistory();
 });
 
-function prePageLoad(){
+function prePageLoad() {
 
-		chrome.storage.local.get(databaseSize, function(result) {
-			console.log("get db size "+result['size']);	
-		if (result == null ) 
-			databaseSize.size = 0;	
-		else if (result['size'] == 0 ){
-			databaseSize.size += result['size'];
-		}
-		else databaseSize.size = 1;
-		});
+	chrome.storage.local.get('', function(result) {
+		if (result.database == null || result.database == undefined)
+			database.size = 1;
+		else if (result.database.size == 0) {
+			database.size += result.database.size;
+		} else
+			database.size = 1;
+	});
+
+	console.log("get db size " + database.size);
+
+	saveHistory();
 }
-function changeDBsize(){
-	chrome.storage.local.get(databaseSize, function(result) {
-			databaseSize.size += 1;
-		});
-		
+
+function changeDBsize() {
+	database.size += 1;
 	chrome.storage.local.set({
-		databaseSize : databaseSize
+		database : database
 	}, function() {
-		// you can use strings instead of objects
-		// if you don't  want to define default values
-		console.log("DB SIZE SAVED "+databaseSize.size);
+		console.log("DB SIZE SAVED " + database.size);
 	});
 }
 
+function displayDataBase() {
+	// read from data base
+	for (var i = 1; i <= database.size; i++) {
+		var obj = "key"+i.toString();
+		chrome.storage.local.get(obj, function(result) {
+			console.log("read dataBase: ");
+			if (result.obj != null) {
+				console.log(result.obj.url);
+				console.log(result.obj.name);
+			}
+		});
+	}
+}
 
 // store data in chrome DB
 function saveHistory() {
-	var jsonName = databaseSize.size.toString();
+	var jsonName = "key"+database.size.toString();
+	console.log("jsonName " + jsonName);
 	// save json type
 	var jsonName = {
 		url : "avishay",
 		name : "hajbi"
 	};
-	
-	
+
 	// store into data base
 	chrome.storage.local.set({
 		jsonName : jsonName
 	}, function() {
-		changeDBsize();
-		console.log("SAVED");
+		console.log("jason SAVED");
 	});
 
-	// read from data base
-	for (var i = 1; i <= databaseSize.size; i++) {
-		chrome.storage.local.get(i.toString(), function(result) {
-			console.log(result['url']);
-			console.log(result.name);
-		});
-	}
+	changeDBsize();
+
+	displayDataBase();
+
 }
 
 /*	// display DB size in MB
