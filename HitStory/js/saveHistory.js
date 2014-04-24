@@ -2,8 +2,66 @@ var database = {
 	size : 0
 };
 
+
+// takes 6 params returns 1 json type class
+function createTabClass(created,active_time,closed,title,url,is_root,children){
+    
+    var tab_class = {
+        created :created, // check javasacript Date()
+        active_time: active_time,//chrome events onActivated
+        closed: closed, //chrome events onRemoved
+        title:title, //get from $('title').html()
+        url:"url", //document.location.href
+        is_root:"is?", //if this is opend from google, or blank new tab
+        children:"dd", //add array of the childrens id's 
+        img_url:"", //chrome events captureVisibleTab
+    };
+    return tab_class;
+}
+
+/* Using underscore js to find stuff - http://underscorejs.org/ */
+//var where = _.where(page_data, {name: "andy", price: 50});
+//var where = _.where(page_data, {id: 1});
+
+function addToStorage(add_data)
+{
+    var page_data = getStorage();
+    page_data.push(add_data);
+    chrome.storage.local.set({'page_data': page_data});
+    //chrome.storage.sync();
+}
+
+function getStorage() {
+    var page_data;
+    chrome.storage.local.get('page_data', function (result) {
+        page_data = result.page_data;
+        console.table(page_data);
+        console.log( page_data);
+    });
+    return page_data;
+} 
+
+
+// look at createTabClass() to know how to get the correct vars
 $(document).ready(function() {
-	prePageLoad();
+    /*
+    var add_data = createTabClass('created','active_time','closed','title','url','is_root','children');
+    addToStorage(add_data);
+    add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2');
+    addToStorage(add_data);
+    */
+    var page_data = [];
+   
+    var add_data = createTabClass('created','active_time','closed','title','url','is_root','children');
+    page_data.push(add_data);
+    add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2');
+    page_data.push(add_data);
+    chrome.storage.local.set({'page_data': page_data});
+    getStorage(); //this hapens async so if you put stuff after it , it will excute before.. need to do a callback function if you want to do sync..
+	//prePageLoad();
+	//console.table([{a:1, b:2, c:3}, {a:"foo", b:false, c:undefined}]);
+	
+	
 });
 
 function prePageLoad() {
