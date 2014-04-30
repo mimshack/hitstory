@@ -4,17 +4,16 @@ var database = {
 
 
 // takes 6 params returns 1 json type class
-function createTabClass(created,active_time,closed,title,url,is_root,children){
-    
+function createTabClass(created,active_time,closed,title,url,is_root,children,image_url){    
     var tab_class = {
         created :created, // check javasacript Date()
         active_time: active_time,//chrome events onActivated
         closed: closed, //chrome events onRemoved
         title:title, //get from $('title').html()
-        url:"url", //document.location.href
+        url:url, //document.location.href
         is_root:"is?", //if this is opend from google, or blank new tab
         children:"dd", //add array of the childrens id's 
-        img_url:"", //chrome events captureVisibleTab
+        img_url:image_url, //chrome events captureVisibleTab
     };
     return tab_class;
 }
@@ -25,6 +24,7 @@ function createTabClass(created,active_time,closed,title,url,is_root,children){
 
 function addToStorage(add_data)
 {
+	
     var page_data = getStorage();
     page_data.push(add_data);
     chrome.storage.local.set({'page_data': page_data});
@@ -40,10 +40,17 @@ function getStorage() {
     });
     return page_data;
 } 
-
-
+var image_url=null;
+function capture_image_url(){
+	chrome.runtime.sendMessage({msg: "capture"}, function(response) {
+	  	console.log(response.imgSrc);
+	  	image_url=response.imgSrc;
+	  	return image_url;
+	});
+}
 // look at createTabClass() to know how to get the correct vars
 $(document).ready(function() {
+	
     /*
     var add_data = createTabClass('created','active_time','closed','title','url','is_root','children');
     addToStorage(add_data);
@@ -52,9 +59,9 @@ $(document).ready(function() {
     */
     var page_data = [];
    
-    var add_data = createTabClass('created','active_time','closed','title','url','is_root','children');
+    var add_data = createTabClass(new Date().getTime(),'active_time','closed',document.title,window.location.href,'is_root','children',capture_image_url());
     page_data.push(add_data);
-    add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2');
+    add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2','image_url');
     page_data.push(add_data);
     chrome.storage.local.set({'page_data': page_data});
     getStorage(); //this hapens async so if you put stuff after it , it will excute before.. need to do a callback function if you want to do sync..
