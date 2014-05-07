@@ -1,8 +1,3 @@
-var database = {
-	size : 0
-};
-
-
 // takes 6 params returns 1 json type class
 function createTabClass(created,active_time,closed,title,url,is_root,children,image_url){    
     var tab_class = {
@@ -12,7 +7,7 @@ function createTabClass(created,active_time,closed,title,url,is_root,children,im
         title:title, //get from $('title').html()
         url:url, //document.location.href
         is_root:"is?", //if this is opend from google, or blank new tab
-        children:"dd", //add array of the childrens id's 
+        children:"child", //add array of the childrens id's 
         img_url:image_url, //chrome events captureVisibleTab
     };
     return tab_class;
@@ -24,7 +19,6 @@ function createTabClass(created,active_time,closed,title,url,is_root,children,im
 
 function addToStorage(add_data)
 {
-	
     var page_data = getStorage();
     page_data.push(add_data);
     chrome.storage.local.set({'page_data': page_data});
@@ -45,13 +39,11 @@ function capture_image_url(){
 	chrome.runtime.sendMessage({msg: "capture"}, function(response) {
 	  	console.log(response.imgSrc);
 	  	image_url=response.imgSrc;
-	  	return image_url;
+	  	saveData();
 	});
 }
-// look at createTabClass() to know how to get the correct vars
-$(document).ready(function() {
-	
-    /*
+function saveData(){
+	 /*
     var add_data = createTabClass('created','active_time','closed','title','url','is_root','children');
     addToStorage(add_data);
     add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2');
@@ -59,7 +51,7 @@ $(document).ready(function() {
     */
     var page_data = [];
    
-    var add_data = createTabClass(new Date().getTime(),'active_time','closed',document.title,window.location.href,'is_root','children',capture_image_url());
+    var add_data = createTabClass(new Date().getTime(),'active_time','closed',document.title,window.location.href,'is_root','children',image_url);
     page_data.push(add_data);
     add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2','image_url');
     page_data.push(add_data);
@@ -67,10 +59,18 @@ $(document).ready(function() {
     getStorage(); //this hapens async so if you put stuff after it , it will excute before.. need to do a callback function if you want to do sync..
 	//prePageLoad();
 	//console.table([{a:1, b:2, c:3}, {a:"foo", b:false, c:undefined}]);
-	
-	
+}
+
+// look at createTabClass() to know how to get the correct vars
+$(document).ready(function() {
+	capture_image_url();
 });
 
+
+/*
+var database = {
+	size : 0
+};
 function prePageLoad() {
 
 	chrome.storage.local.get('', function(result) {
@@ -132,6 +132,7 @@ function saveHistory() {
 	displayDataBase();
 
 }
+*/
 
 /*	// display DB size in MB
  var storageSize = 1;
