@@ -16,10 +16,10 @@ function createTabClass(created,active_time,closed,title,url,is_root,children,im
 /* Using underscore js to find stuff - http://underscorejs.org/ */
 //var where = _.where(page_data, {name: "andy", price: 50});
 //var where = _.where(page_data, {id: 1});
+//GLOBAL variables
 var page_data= [];
-
-function addToStorage(add_data)
-{
+var image_url=null;
+function addToStorage(add_data){
     page_data.push(add_data);
     chrome.storage.local.set({'page_data': page_data});
     //chrome.storage.sync();
@@ -35,7 +35,6 @@ function displayStorage(){
         console.table(page_data);
         console.log( page_data);
 }
-var image_url=null;
 function capture_image_url(){
 	chrome.runtime.sendMessage({msg: "capture"}, function(response) {
 	  	console.log(response.imgSrc);
@@ -45,21 +44,20 @@ function capture_image_url(){
 	});
 }
 function saveData(){
-
     var add_data = createTabClass(new Date().getTime(),'active_time','closed',document.title,window.location.href,'is_root','children',image_url);
     page_data.push(add_data);//the DB is still empty
     chrome.storage.local.set({'page_data': page_data}, function (result){
-    	addToStorage(add_data);
+    	addToStorage(add_data); // another call to DB and now it success
     	displayStorage(); 
     });
-    
-    
 }
 
 // look at createTabClass() to know how to get the correct vars
 $(document).ready(function() {
 	capture_image_url();
 });
+
+
 
 
 
