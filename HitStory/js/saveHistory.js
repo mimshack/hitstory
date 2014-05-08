@@ -16,55 +16,67 @@ function createTabClass(created,active_time,closed,title,url,is_root,children,im
 /* Using underscore js to find stuff - http://underscorejs.org/ */
 //var where = _.where(page_data, {name: "andy", price: 50});
 //var where = _.where(page_data, {id: 1});
+var page_data= [];
 
 function addToStorage(add_data)
 {
-    var page_data = getStorage();
     page_data.push(add_data);
     chrome.storage.local.set({'page_data': page_data});
     //chrome.storage.sync();
 }
 
-function getStorage() {
-    var page_data;
+function getStorage() { 
     chrome.storage.local.get('page_data', function (result) {
         page_data = result.page_data;
+        setTimeout(function() {}, 5000);});
+} 
+
+function displayStorage(){
         console.table(page_data);
         console.log( page_data);
-    });
-    return page_data;
-} 
+}
 var image_url=null;
 function capture_image_url(){
 	chrome.runtime.sendMessage({msg: "capture"}, function(response) {
 	  	console.log(response.imgSrc);
 	  	image_url=response.imgSrc;
+	  	getStorage();
 	  	saveData();
 	});
 }
 function saveData(){
-	 /*
-    var add_data = createTabClass('created','active_time','closed','title','url','is_root','children');
-    addToStorage(add_data);
-    add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2');
-    addToStorage(add_data);
-    */
-    var page_data = [];
-   
+
     var add_data = createTabClass(new Date().getTime(),'active_time','closed',document.title,window.location.href,'is_root','children',image_url);
-    page_data.push(add_data);
-    add_data = createTabClass('created2','active_time2','closed2','title2','url2','is_root2','children2','image_url');
-    page_data.push(add_data);
-    chrome.storage.local.set({'page_data': page_data});
-    getStorage(); //this hapens async so if you put stuff after it , it will excute before.. need to do a callback function if you want to do sync..
-	//prePageLoad();
-	//console.table([{a:1, b:2, c:3}, {a:"foo", b:false, c:undefined}]);
+    page_data.push(add_data);//the DB is still empty
+    chrome.storage.local.set({'page_data': page_data}, function (result){
+    	addToStorage(add_data);
+    	displayStorage(); 
+    });
+    
+    
 }
 
 // look at createTabClass() to know how to get the correct vars
 $(document).ready(function() {
 	capture_image_url();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
