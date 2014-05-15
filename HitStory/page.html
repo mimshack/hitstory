@@ -9,7 +9,9 @@
 	<body>
 		<header>
 			<h3>HitStory</h3>
-			<p>last 10 visted sites</p>
+			<p>
+				last 10 visted sites
+			</p>
 		</header>
 		<div class="wrapper">
 			<ul>
@@ -48,5 +50,26 @@
 		<footer>
 			<a href="#">View on dashboard</a>
 		</footer>
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+var last_ten = [];
+
+function init_popup() {
+
+}
+
+function updateLastTen(url) {
+    if (last_ten.length < 10)
+        last_ten[9] = url;
+    else
+        last_ten.push(url);
+
+}
+
+
+$(document).ready(function() {
+
+});
+		</script>
 	</body>
 </html>
