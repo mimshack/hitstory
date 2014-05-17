@@ -24,8 +24,8 @@
 ],
    "icons": {
     	"19": "images/icon-19.png",           // optional
-	"48": "images/icon-48.png",
-	"128": "images/icon-19.png"         // optional
+		"48": "images/icon-48.png",
+		"128": "images/icon-19.png"         // optional
   },
   "omnibox": { 
   	   "keyword" : "hitstory" 
