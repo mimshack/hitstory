@@ -1,7 +1,5 @@
 var last_ten = [];
-setTimeout(function() {
-    init_popup();
-}, 5000);
+
 
 //use: var l = new LastTen(url_link, class_name, duration); last_ten.push(l)
 function LastTen(url_link, class_name, duration) {
@@ -45,11 +43,16 @@ function init_popup() {
     var url_link, class_name, duration;
     var interation = (page_data.length > 10) ? 10 : page_data.length;
 
-    for ( i = 0; i < interation; i++) {
+    for (i = 0; i < interation; i++) {
+    try{
         class_name = setClassName(page_data[i].created);
         url_link = page_data[i].url;
         var j = url_link.indexOf("//");
         $('.hitstory .wrapper ul').prepend('<li class="' + class_name + '"><a target="_blank" href="' + url_link + '">' + url_link.substr(j + 2, 30) + '</a></li>');
+       }
+       catch(Exception){
+       	console.log("page data["+i+"] not exist");
+       }
     }
     $('.hitstory .wrapper').removeClass('spinner');
 }
@@ -64,5 +67,7 @@ function updateLastTen(url) {
 
 
 $(document).ready(function() {
-
+setTimeout(function() {
+    init_popup();
+}, 5000);
 }); 
