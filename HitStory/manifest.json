@@ -37,7 +37,7 @@
 	},
   "content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/captureImage.js"],
+		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/captureImage.js","js/popup.js"],
 		"css": ["css/page.css"]
   }],
   "manifest_version": 2

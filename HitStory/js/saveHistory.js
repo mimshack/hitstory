@@ -29,6 +29,7 @@ function getStorage() {
     chrome.storage.local.get('page_data', function (result) {
         page_data = result.page_data;
         setTimeout(function() {}, 5000);});
+        return page_data;
 } 
 
 function displayStorage(){
