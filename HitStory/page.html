@@ -3,73 +3,29 @@
 	<head>
 		<meta charset=utf-8>
 		<title>Full page screen catpure</title>
+		<link rel="stylesheet" href="http://css-spinners.com/css/spinner/spinner.css" type="text/css">
 		<link rel="stylesheet" href="css/page.css">
-
 	</head>
-	<body>
+	<body class="hitstory">
 		<header>
 			<h3>HitStory</h3>
 			<p>
 				last 10 visted sites
 			</p>
 		</header>
-		<div class="wrapper">
+		<div class="wrapper spinner">
 			<ul>
-				<li class="duration1">
-					<a href="#">www.whyAmISoStupid.com</a>
-				</li>
-				<li class="duration2">
-					<a href="#">www.facebook.com</a>
-				</li>
-				<li class="duration3">
-					<a href="#">www.yahoo.com</a>
-				</li>
-				<li class="duration4">
-					<a href="#">www.gmail.com</a>
-				</li>
-				<li class="duration5">
-					<a href="#">www.ask.com</a>
-				</li>
-				<li class="duration3">
-					<a href="#">www.ivory.co.il</a>
-				</li>
-				<li class="duration1">
-					<a href="#">www.ynet.co.il</a>
-				</li>
-				<li class="duration4">
-					<a href="#">www.bloop.com</a>
-				</li>
-				<li class="duration2">
-					<a href="#">www.blip.co.il</a>
-				</li>
-				<li class="duration5">
-					<a href="#">www.ladida.co.il</a>
-				</li>
+				
 			</ul>
 		</div>
 		<footer>
 			<a href="#">View on dashboard</a>
 		</footer>
+		
 		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript">
-var last_ten = [];
+		<script type="text/javascript" src="js/saveHistory.js"></script>
+		<script type="text/javascript" src="js/popup.js"></script>
 
-function init_popup() {
-
-}
-
-function updateLastTen(url) {
-    if (last_ten.length < 10)
-        last_ten[9] = url;
-    else
-        last_ten.push(url);
-
-}
-
-
-$(document).ready(function() {
-
-});
 		</script>
 	</body>
 </html>
