@@ -48,6 +48,8 @@ function init_popup() {
         class_name = setClassName(page_data[i].created);
         url_link = page_data[i].url;
         var j = url_link.indexOf("//");
+        console.log("***********"+page_data[i]);
+        if (url_link.substr(j + 2, 30) != "mbppfennfgagnihfndnpdclloejkjh")
         $('.hitstory .wrapper ul').prepend('<li class="' + class_name + '"><a target="_blank" href="' + url_link + '">' + url_link.substr(j + 2, 30) + '</a></li>');
        }
        catch(Exception){
