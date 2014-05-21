@@ -10,8 +10,8 @@
        "default_popup": "page.html"        // optional
   },
  "permissions": [
+ 	"tabs" ,
     "activeTab",
-    "tabs" ,
     "storage",
     "unlimitedStorage",
     "browsingData",
@@ -41,5 +41,7 @@
 		"css": ["css/page.css"]
   }],
   "manifest_version": 2
+  
 }
+
 

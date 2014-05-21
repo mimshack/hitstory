@@ -1,5 +1,5 @@
 var newTabIsOpened= false;
-
+var action = true;
 // capture page
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	chrome.tabs.captureVisibleTab(null, {}, function(dataUrl) {
@@ -18,6 +18,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // tabs change to another
 chrome.tabs.onActiveChanged.addListener(function(){
 	console.log("**** tab wad unselected ****");
+	if (action)
 	newTabIsOpened = false;
 	var notification = webkitNotifications.createNotification( '48.png',	 'Tab Alert',	 'tab is changed' );
 	    //notification.show();
@@ -26,6 +27,7 @@ chrome.tabs.onActiveChanged.addListener(function(){
 // tabs replaced -- refreshed
 chrome.tabs.onReplaced.addListener(function(){
 	console.log("**** tab was replaced ****");
+	if (action)
 	newTabIsOpened = false;
 	var notification = webkitNotifications.createNotification( '48.png',	 'Tab Alert',	 'tab is replaced' );
 	    //notification.show();
@@ -34,7 +36,10 @@ chrome.tabs.onReplaced.addListener(function(){
 // on tab created
 chrome.tabs.onCreated.addListener(function(){
 	console.log("**** new tab has been created ****");
-	newTabIsOpened = true;
+	if (action){
+		action = false;
+		newTabIsOpened = true;
+	}
 	var notification = webkitNotifications.createNotification( '48.png',	 'Tab Alert',	 'new tab created' );
 	    //notification.show();
 });

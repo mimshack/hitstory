@@ -34,7 +34,7 @@ function getStorage() {
 	chrome.storage.local.get('page_data', function(result) {
 		page_data = result.page_data;
 		setTimeout(function() {
-		}, 5000);
+		}, 3000);
 	});
 	return page_data;
 }
@@ -63,6 +63,7 @@ function calculateTimes(){
 }
 
 function saveData() {
+	if (window.location.href.indexOf("chrome-extension")!=-1) return;
 	var add_data = createTabClass(new Date().getTime(), "active_time", 'closed', document.title, window.location.href, newTabIsOpened, children, image_url);
 	page_data.push(add_data);
 	//the DB is still empty
