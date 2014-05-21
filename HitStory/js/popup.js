@@ -51,7 +51,7 @@ function init_popup() {
         var j = url_link.indexOf("//");
         //console.log("***********"+page_data[i].url);
         if (page_data[i].url.indexOf("chrome-extension")==-1)
-        	$('.hitstory .wrapper ul').prepend('<li class="' + class_name + '"><a target="_blank" href="' + url_link + '">' + url_link.substr(j + 2, 30) + '</a></li>');
+        	$('.hitstory .wrapper ul').prepend('<li class="' + class_name + '"><img src="'+page_data[i].img_url+'" width=20px; height=20px; style="float:left;"><a target="_blank" href="' + url_link + '">' + page_data[i].title + '</a></li>');
         else{
         	i--;
         	check++;
@@ -69,7 +69,6 @@ function updateLastTen(url) {
         last_ten[9] = url;
     else
         last_ten.push(url);
-
 }
 
 

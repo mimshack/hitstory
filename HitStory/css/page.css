@@ -10,7 +10,7 @@
 .hitstory ul li a{ color:#fff; width:300px;}
 .hitstory ul li{ padding:9px; text-align: center;}
 .duration1,.duration2,.duration3,.duration4,.duration5{
-	width:auto;
+	width:300px;
 }
 .hitstory ul li:hover{ background-color: #009966;}
 .hitstory .duration1{ background-color: #B0E2FF;}
