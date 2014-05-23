@@ -1,6 +1,7 @@
 // takes 6 params returns 1 json type class
-function createTabClass(created, active_time, closed, title, url, is_root, children, image_url) {
+function createTabClass(tab_id, created, active_time, closed, title, url, is_root, children, image_url) {
 	var tab_class = {
+		tab_id : tab_id,
 		created : created, // check javasacript Date()
 		active_time : active_time, //chrome events onActivated
 		closed : closed, //chrome events onRemoved
@@ -19,10 +20,14 @@ function createTabClass(created, active_time, closed, title, url, is_root, child
 //GLOBAL variables
 var page_data = [];
 var children = [];
+var isChild = false;
 var image_url = null;
 var tabOpened = false;
 var tabClosed = false;
-var checkGlobal="i am global";
+var tabChanged = false;
+var tabRefreshed = false;
+var tabSelected = 0;
+var checkGlobal = "i am global";
 function addToStorage(add_data) {
 	page_data.push(add_data);
 	chrome.storage.local.set({
@@ -49,59 +54,82 @@ function capture_image_url() {
 	chrome.runtime.sendMessage({
 		msg : "capture"
 	}, function(response) {
-		console.log("capture image"+response.imgSrc);
-		image_url = response.imgSrc;
-		console.log("if new tab created "+response.tabInfoOpen);
+		console.log("capture image " + response.imgSrc);
+		if (response.imgSrc != null)
+			image_url = response.imgSrc;
+		console.log("tab ID " + response.tabId);
+		tabSelected = response.tabId;
+		console.log("if new tab created " + response.tabInfoOpen);
 		tabOpened = response.tabInfoOpen;
-		console.log("tab closed "+response.tabInfoClose);
+		console.log("tab closed " + response.tabInfoClose);
 		tabClosed = response.tabInfoClose;
+		console.log("tab changed " + response.tabInfoChange);
+		tabChanged = response.tabInfoChange;
+		console.log("tab refreshed " + response.tabInfoRefresh);
+		tabRefreshed = response.tabInfoRefresh;
 		getStorage();
-		calculateTimes();
 		saveData();
 	});
 }
 
-function calculateTimes(){
+function calculateTimes() {
 	// here we will calculate 'active time' , children and more...
+	// check if it's a child
+	var where = _.where(page_data, {
+		is_root : "true",
+		tab_id : tabSelected
+	});
+	if (where) {
+		if (window.location.href.indexOf("chrome-extension") != -1)
+			return;
+		if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
+			return;
+		if (getPageIcon())
+			image_url = getPageIcon();
+		var	child = createTabClass(tabSelected, new Date().getTime(), new Date().getTime(), false, document.title, window.location.href, false, false, image_url);
+		where.children.push(child);
+		return true;
+	} else
+		return false;
+
 }
 
 function saveData() {
-	if (window.location.href.indexOf("chrome-extension")!=-1) return;
-	if (getPageIcon()) image_url=getPageIcon();
-	var add_data = createTabClass(new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children,  image_url);
-	page_data.push(add_data);
+	if (window.location.href.indexOf("chrome-extension") != -1)
+		return;
+	if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
+		return;
+	if (getPageIcon())
+		image_url = getPageIcon();
+	isChild = calculateTimes();
+	if (!isChild){
+		var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
+		page_data.push(add_data);
+	}
 	//the DB is still empty
 	chrome.storage.local.set({
 		'page_data' : page_data
 	}, function(result) {
 		addToStorage(add_data);
-		// another call to DB and now it success
 		displayStorage();
 	});
-	
-	// init to false because they keep their value
-	tabOpened=false;
-	tabClosed=false;
-	tabIsOpened=false;
-	tabIsClosed=false;
 }
 
-function getPageIcon(){
+function getPageIcon() {
 	var links = document.head.getElementsByTagName('link');
-for(var link in links){
-    if(links.hasOwnProperty(link)){
-        var l = links[link];
-        if(l.rel === 'shortcut icon'){
-        	console.log("shortcut icon "+l.href);
-          return l.href;
-        }
-    }
-}
+	for (var link in links) {
+		if (links.hasOwnProperty(link)) {
+			var l = links[link];
+			if (l.rel === 'shortcut icon') {
+				//console.log("shortcut icon "+l.href);
+				return l.href;
+			}
+		}
+	}
 }
 
 // look at createTabClass() to know how to get the correct vars
 $(document).ready(function() {
 	capture_image_url();
 });
-
 
