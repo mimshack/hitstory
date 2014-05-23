@@ -62,7 +62,7 @@ function capture_image_url() {
 		console.log("if new tab created " + response.tabInfoOpen);
 		tabOpened = response.tabInfoOpen;
 		console.log("tab closed " + response.tabInfoClose);
-		tabClosed = response.tabInfoClose;
+		tabClosed = false; //response.tabInfoClose; // temporary
 		console.log("tab changed " + response.tabInfoChange);
 		tabChanged = response.tabInfoChange;
 		console.log("tab refreshed " + response.tabInfoRefresh);
@@ -72,12 +72,12 @@ function capture_image_url() {
 	});
 }
 
-function calculateTimes() {
-	// here we will calculate 'active time' , children and more...
+function saveChild() {
 	// check if it's a child
-	var where = _.where(page_data, {
+	var where = _.findWhere(page_data, {
 		is_root : "true",
-		tab_id : tabSelected
+		tab_id : tabSelected,
+		closed : false
 	});
 	if (where) {
 		if (window.location.href.indexOf("chrome-extension") != -1)
@@ -86,8 +86,10 @@ function calculateTimes() {
 			return;
 		if (getPageIcon())
 			image_url = getPageIcon();
-		var	child = createTabClass(tabSelected, new Date().getTime(), new Date().getTime(), false, document.title, window.location.href, false, false, image_url);
-		where.children.push(child);
+		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
+		console.log(where); // *** BROBLEM *** 'where' didn't execute 
+		//where.children.push(isChild);
+		console.log(isChild);
 		return true;
 	} else
 		return false;
@@ -95,17 +97,15 @@ function calculateTimes() {
 }
 
 function saveData() {
+	saveChild();
 	if (window.location.href.indexOf("chrome-extension") != -1)
 		return;
 	if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
 		return;
 	if (getPageIcon())
 		image_url = getPageIcon();
-	isChild = calculateTimes();
-	if (!isChild){
-		var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
-		page_data.push(add_data);
-	}
+	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
+	page_data.push(add_data);
 	//the DB is still empty
 	chrome.storage.local.set({
 		'page_data' : page_data
