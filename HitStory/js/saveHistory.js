@@ -1,6 +1,22 @@
+function getObjects(obj, key, val) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getObjects(obj[i], key, val));
+        } else if (i == key && obj[key] == val) {
+            objects.push(obj);
+        }
+    }
+    return objects;
+}
+
+
 // takes 6 params returns 1 json type class
+
 function createTabClass(tab_id, created, active_time, closed, title, url, is_root, children, image_url) {
 	var tab_class = {
+	    id:page_data.length,
 		tab_id : tab_id,
 		created : created, // check javasacript Date()
 		active_time : active_time, //chrome events onActivated
@@ -47,7 +63,14 @@ function getStorage() {
 
 function displayStorage() {
 	console.table(page_data);
-	//console.log(page_data);
+	var where = _.findWhere(page_data, {
+	    is_root : true,
+	    tab_id : tabSelected,
+        closed : false
+	});
+	console.log(_.indexOf(page_data,where));
+	//getObjects(TestObj, 'is_root', 'A');
+	console.log('where',where);
 }
 
 function capture_image_url() {
