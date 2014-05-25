@@ -1,7 +1,10 @@
+body{
+	background-image: url(../images/background.jpg);
+}
 .row{
 	position:relative;
+	top: -100px;
 	left:-90px;
-	top:50px;
 }
 .chosen-container{
 	position:relative;
