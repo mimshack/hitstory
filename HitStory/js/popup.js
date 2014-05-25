@@ -1,7 +1,5 @@
 var last_ten = [];
-setTimeout(function() {
-    init_popup();
-}, 5000);
+
 
 //use: var l = new LastTen(url_link, class_name, duration); last_ten.push(l)
 function LastTen(url_link, class_name, duration) {
@@ -37,19 +35,31 @@ function setClassName(time) {
         else if  (time>1800)
             class_name += "5";
         else alert(time);
-    console.log(class_name);
+    //console.log(class_name);
     return class_name;
 }
 
 function init_popup() {
     var url_link, class_name, duration;
     var interation = (page_data.length > 10) ? 10 : page_data.length;
-
-    for ( i = 0; i < interation; i++) {
+	var check = 0;
+    for (i = 0; i < interation; i++) {
+    	if (check == interation) break;
+    try{
         class_name = setClassName(page_data[i].created);
         url_link = page_data[i].url;
         var j = url_link.indexOf("//");
-        $('.hitstory .wrapper ul').prepend('<li class="' + class_name + '"><a target="_blank" href="' + url_link + '">' + url_link.substr(j + 2, 30) + '</a></li>');
+        //console.log("***********"+page_data[i].url);
+        if (page_data[i].url.indexOf("chrome-extension")==-1)
+        	$('.hitstory .wrapper ul').prepend('<li class="' + class_name + '"><img src="'+page_data[i].img_url+'" width=20px; height=20px; style="float:left;"><a target="_blank" href="' + url_link + '">' + page_data[i].title + '</a></li>');
+        else{
+        	i--;
+        	check++;
+        } 
+       }
+       catch(Exception){
+       	console.log("page data["+i+"] not exist");
+       }
     }
     $('.hitstory .wrapper').removeClass('spinner');
 }
@@ -59,10 +69,11 @@ function updateLastTen(url) {
         last_ten[9] = url;
     else
         last_ten.push(url);
-
 }
 
 
 $(document).ready(function() {
-
+setTimeout(function() {
+    init_popup();
+}, 3000);
 }); 

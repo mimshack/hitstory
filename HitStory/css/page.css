@@ -1,13 +1,17 @@
-@import url(http://fonts.googleapis.com/css?family=Indie+Flower);
-
-body.hitstory{margin 0px;}
-.hitstory .wrapper{font-family: 'Indie Flower', cursive; margin: 5px 35px 5px 0px;}
+@import url(http://fonts.googleapis.com/css?family=<link href=Open+Sans);
+*{
+	padding: 0;
+	margin:0;
+}
+.hitstory .wrapper{font-family: 'Indie Flower', cursive; margin: 0px 0px 0px 0px; }
 .hitstory .wrapper.spinner{margin: 29px;}
 
-.hitstory ul{list-style: none; }
-.hitstory ul li a{ max-width:300px; color:#fff;}
+.hitstory ul{list-style: none; width:auto; margin:0}
+.hitstory ul li a{ color:#fff; width:300px;}
 .hitstory ul li{ padding:9px; text-align: center;}
-
+.duration1,.duration2,.duration3,.duration4,.duration5{
+	width:300px;
+}
 .hitstory ul li:hover{ background-color: #009966;}
 .hitstory .duration1{ background-color: #B0E2FF;}
 .hitstory .duration2{ background-color: #87CEFA;}

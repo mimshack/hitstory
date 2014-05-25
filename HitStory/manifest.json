@@ -10,8 +10,8 @@
        "default_popup": "page.html"        // optional
   },
  "permissions": [
+ 	"tabs" ,
     "activeTab",
-    "tabs" ,
     "storage",
     "unlimitedStorage",
     "browsingData",
@@ -24,8 +24,8 @@
 ],
    "icons": {
     	"19": "images/icon-19.png",           // optional
-	"48": "images/icon-48.png",
-	"128": "images/icon-19.png"         // optional
+		"48": "images/icon-48.png",
+		"128": "images/icon-128.png"         // optional
   },
   "omnibox": { 
   	   "keyword" : "hitstory" 
@@ -37,9 +37,11 @@
 	},
   "content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/captureImage.js","js/popup.js"],
+		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/popup.js","js/underscore.min.js"],
 		"css": ["css/page.css"]
   }],
   "manifest_version": 2
+  
 }
+
 
