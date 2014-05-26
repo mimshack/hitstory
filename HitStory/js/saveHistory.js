@@ -116,7 +116,6 @@ function saveChild() {
 		return true;
 	} else
 		return false;
-
 }
 
 function saveData() {
