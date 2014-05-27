@@ -36,6 +36,7 @@ function createTabClass(tab_id, created, active_time, closed, title, url, is_roo
 //GLOBAL variables
 var page_data = [];
 var children = [];
+var loc;
 var isChild = false;
 var image_url = null;
 var tabOpened = false;
@@ -46,6 +47,13 @@ var tabSelected = 0;
 var checkGlobal = "i am global";
 function addToStorage(add_data) {
 	page_data.push(add_data);
+	chrome.storage.local.set({
+		'page_data' : page_data
+	});
+	//chrome.storage.sync();
+}
+function addChildToStorage(add_data) {
+	page_data[loc].children.push(add_data);
 	chrome.storage.local.set({
 		'page_data' : page_data
 	});
@@ -63,14 +71,7 @@ function getStorage() {
 
 function displayStorage() {
 	console.table(page_data);
-	var where = _.findWhere(page_data, {
-	    is_root : true,
-	    tab_id : tabSelected,
-        closed : false
-	});
-	console.log(_.indexOf(page_data,where));
-	//getObjects(TestObj, 'is_root', 'A');
-	console.log('where',where);
+	saveChild();
 }
 
 function capture_image_url() {
@@ -98,10 +99,11 @@ function capture_image_url() {
 function saveChild() {
 	// check if it's a child
 	var where = _.findWhere(page_data, {
-		is_root : "true",
+		is_root : true,
 		tab_id : tabSelected,
 		closed : false
 	});
+	loc= _.indexOf(page_data,where)+1;
 	if (where) {
 		if (window.location.href.indexOf("chrome-extension") != -1)
 			return;
@@ -110,16 +112,17 @@ function saveChild() {
 		if (getPageIcon())
 			image_url = getPageIcon();
 		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
-		console.log(where); // *** BROBLEM *** 'where' didn't execute 
-		//where.children.push(isChild);
-		console.log(isChild);
-		return true;
-	} else
-		return false;
+		page_data[loc].children.push(isChild);
+		page_data.splice(page_data.length, 1);
+	chrome.storage.local.set({
+		'page_data' : page_data
+	}, function(result) {
+		addChildToStorage(isChild);
+	});
+	}
 }
 
 function saveData() {
-	saveChild();
 	if (window.location.href.indexOf("chrome-extension") != -1)
 		return;
 	if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
