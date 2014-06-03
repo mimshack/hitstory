@@ -4,7 +4,7 @@ var tabIsChanged = false;
 var tabIsRefreshed = false;
 var tabID = 0;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	// get tab id
+	if (request.msg == 'capture'){
 	chrome.tabs.getSelected(null, function(tab) {
 		tabID = tab.id;
 	});
@@ -18,8 +18,18 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 			tabInfoRefresh : tabIsRefreshed
 		});
 	});
-	//remember that captureVisibleTab() is a statement
 	return true;
+	}
+	if (request.data == 'data'){
+		var data = [];
+		chrome.storage.sync.get('page_data', function(result) {
+			 sendResponse({
+				data : result.page_data
+			});
+		});
+	return true;
+	}
+	return false;
 });
 // on tab created
 chrome.tabs.onCreated.addListener(function(tab) {

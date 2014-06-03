@@ -11,6 +11,7 @@ function getObjects(obj, key, val) {
     return objects;
 }
 
+
 // takes 6 params returns 1 json type class
 
 function createTabClass(tab_id, created, active_time, closed, title, url, is_root, children, image_url) {
@@ -43,30 +44,34 @@ var tabClosed = false;
 var tabChanged = false;
 var tabRefreshed = false;
 var tabSelected = 0;
+var checkGlobal = "i am global";
 function addToStorage(add_data) {
 	page_data.push(add_data);
-	chrome.storage.sync.set({
+	chrome.storage.local.set({
 		'page_data' : page_data
 	});
-	displayStorage();
+	//chrome.storage.sync();
 }
 function addChildToStorage(add_data) {
 	page_data[loc].children.push(add_data);
-	chrome.storage.sync.set({
+	page_data.splice(page_data.length, 1);
+	chrome.storage.local.set({
 		'page_data' : page_data
 	});
-	displayStorage();
+	//chrome.storage.sync();
 }
 
 function getStorage() {
-	chrome.storage.sync.get('page_data', function(result) {
+	chrome.storage.local.get('page_data', function(result) {
 		page_data = result.page_data;
+		setTimeout(function() {
+		}, 3000);
 	});
-	displayStorage();
 	return page_data;
 }
 
 function displayStorage() {
+	saveChild();
 	console.table(page_data);
 }
 
@@ -87,16 +92,8 @@ function capture_image_url() {
 		tabChanged = response.tabInfoChange;
 		console.log("tab refreshed " + response.tabInfoRefresh);
 		tabRefreshed = response.tabInfoRefresh;
-		if (!page_data){
-		var where = _.findWhere(page_data, {
-		is_root : true,
-		tab_id : tabSelected,
-		closed : false
-		});
-		if (where) saveChild();
-		else saveData();
-		}
-		else saveData();
+		getStorage();
+		saveData();
 	});
 }
 
@@ -117,7 +114,7 @@ function saveChild() {
 			image_url = getPageIcon();
 		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
 		page_data[loc].children.push(isChild);
-	chrome.storage.sync.set({
+	chrome.storage.local.set({
 		'page_data' : page_data
 	}, function(result) {
 		addChildToStorage(isChild);
@@ -134,10 +131,12 @@ function saveData() {
 		image_url = getPageIcon();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	page_data.push(add_data);
-	chrome.storage.sync.set({
+	//the DB is still empty
+	chrome.storage.local.set({
 		'page_data' : page_data
 	}, function(result) {
 		addToStorage(add_data);
+		displayStorage();
 	});
 }
 
@@ -153,21 +152,9 @@ function getPageIcon() {
 		}
 	}
 }
-function initData(){
-		console.log("init data");
-		chrome.runtime.sendMessage({
-		data : "data"
-	}, function(response) {
-		page_data = response.data;
-		if (page_data){
-			console.log("data is ready");
-		}
-		else {
-			console.log("data is not ready");
-		}
-		capture_image_url();
-	});
-}
+
+// look at createTabClass() to know how to get the correct vars
 $(document).ready(function() {
-	initData();
+	capture_image_url();
 });
+

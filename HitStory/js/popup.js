@@ -73,8 +73,16 @@ function updateLastTen(url) {
         last_ten.push(url);
 }
 
-
+function getStorage() {
+	chrome.storage.local.get('page_data', function(result) {
+		page_data = result.page_data;
+		setTimeout(function() {
+		}, 3000);
+	});
+	return page_data;
+}
 $(document).ready(function() {
+page_data = getStorage();
 setTimeout(function() {
     init_popup();
 }, 3000);
