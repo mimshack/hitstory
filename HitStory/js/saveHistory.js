@@ -158,14 +158,18 @@ function initData(){
 		chrome.runtime.sendMessage({
 		data : "data"
 	}, function(response) {
+		
 		page_data = response.data;
 		if (page_data){
 			console.log("data is ready");
+			capture_image_url();
 		}
 		else {
 			console.log("data is not ready");
+			setTimeout(function(){
+				//initData();
+			}, 3000);
 		}
-		capture_image_url();
 	});
 }
 $(document).ready(function() {
