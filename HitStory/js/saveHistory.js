@@ -166,9 +166,6 @@ function initData(){
 		}
 		else {
 			console.log("data is not ready");
-			setTimeout(function(){
-				//initData();
-			}, 3000);
 		}
 	});
 }
