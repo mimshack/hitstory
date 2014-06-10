@@ -1,0 +1,47 @@
+{
+  "name": "HitStory",
+  "description": "save history pages hierarchy.",
+  "version": "1.0",
+  "web_accessible_resources": ["js/underscore.min.js"],
+
+"browser_action": {
+       "default_icon": "images/icon-19.png",  
+       "default_title": "HitStory",      // optional; shown in tooltip
+       "default_popup": "page.html"        // optional
+  },
+ "permissions": [
+ 	"tabs" ,
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "browsingData",
+    "notifications",
+    "http://*/*",
+    "https://*/*",
+    "file://*/*",
+    "<all_urls>",
+    "background"
+],
+   "icons": {
+    	"19": "images/icon-19.png",           // optional
+		"48": "images/icon-48.png",
+		"128": "images/icon-128.png"         // optional
+  },
+  "omnibox": { 
+  	   "keyword" : "hitstory" 
+  },
+  "background": {
+		"scripts": [
+			"js/background.js"
+		]
+	},
+  "content_scripts": [{
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/popup.js","js/underscore.min.js"],
+		"css": ["css/page.css"]
+  }],
+  "manifest_version": 2
+  
+}
+
+

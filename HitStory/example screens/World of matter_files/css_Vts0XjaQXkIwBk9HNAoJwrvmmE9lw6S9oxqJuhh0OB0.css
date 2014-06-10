@@ -1,0 +1,57 @@
+DIV.messages {
+	BORDER-TOP: 1px solid; BORDER-RIGHT: 1px solid; BACKGROUND-REPEAT: no-repeat; BORDER-BOTTOM: 1px solid; BACKGROUND-POSITION: 8px 8px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 50px; MARGIN: 6px 0px; BORDER-LEFT: 1px solid; PADDING-RIGHT: 10px
+}
+DIV.status {
+	BORDER-TOP-COLOR: #be7; BACKGROUND-IMAGE: url(/misc/message-24-ok.png); BORDER-LEFT-COLOR: #be7; BORDER-BOTTOM-COLOR: #be7; BORDER-RIGHT-COLOR: #be7
+}
+DIV.status {
+	COLOR: #234600
+}
+.ok {
+	COLOR: #234600
+}
+DIV.status {
+	BACKGROUND-COLOR: #f8fff0
+}
+TABLE TR.ok {
+	BACKGROUND-COLOR: #f8fff0
+}
+DIV.warning {
+	BORDER-TOP-COLOR: #ed5; BACKGROUND-IMAGE: url(/misc/message-24-warning.png); BORDER-LEFT-COLOR: #ed5; BORDER-BOTTOM-COLOR: #ed5; BORDER-RIGHT-COLOR: #ed5
+}
+DIV.warning {
+	COLOR: #840
+}
+.warning {
+	COLOR: #840
+}
+DIV.warning {
+	BACKGROUND-COLOR: #fffce5
+}
+TABLE TR.warning {
+	BACKGROUND-COLOR: #fffce5
+}
+DIV.error {
+	BORDER-TOP-COLOR: #ed541d; BACKGROUND-IMAGE: url(/misc/message-24-error.png); BORDER-LEFT-COLOR: #ed541d; BORDER-BOTTOM-COLOR: #ed541d; BORDER-RIGHT-COLOR: #ed541d
+}
+DIV.error {
+	COLOR: #8c2e0b
+}
+.error {
+	COLOR: #8c2e0b
+}
+DIV.error {
+	BACKGROUND-COLOR: #fef5f1
+}
+TABLE TR.error {
+	BACKGROUND-COLOR: #fef5f1
+}
+DIV.error P.error {
+	COLOR: #333
+}
+DIV.messages UL {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px 0px 0px 1em; PADDING-RIGHT: 0px
+}
+DIV.messages UL LI {
+	LIST-STYLE-IMAGE: none
+}
