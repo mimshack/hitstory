@@ -45,16 +45,14 @@ var tabRefreshed = false;
 var tabSelected = 0;
 function addToStorage(add_data) {
 	page_data.push(add_data);
-	chrome.storage.sync.set({
-		'page_data' : page_data
-	});
+// Store
+	localStorage.setItem('page_data', JSON.stringify(page_data));
 	displayStorage();
 }
 function addChildToStorage(add_data) {
 	page_data[loc].children.push(add_data);
-	chrome.storage.sync.set({
-		'page_data' : page_data
-	});
+	// Store
+	localStorage.setItem('page_data',  JSON.stringify(page_data));
 	displayStorage();
 }
 
@@ -117,11 +115,9 @@ function saveChild() {
 			image_url = getPageIcon();
 		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
 		page_data[loc].children.push(isChild);
-	chrome.storage.sync.set({
-		'page_data' : page_data
-	}, function(result) {
+
 		addChildToStorage(isChild);
-	});
+	
 	}
 }
 
@@ -134,11 +130,9 @@ function saveData() {
 		image_url = getPageIcon();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	page_data.push(add_data);
-	chrome.storage.sync.set({
-		'page_data' : page_data
-	}, function(result) {
+
 		addToStorage(add_data);
-	});
+
 }
 
 function getPageIcon() {
@@ -154,21 +148,22 @@ function getPageIcon() {
 	}
 }
 function initData(){
-		console.log("init data");
-		chrome.runtime.sendMessage({
-		data : "data"
-	}, function(response) {
-		
-		page_data = response.data;
-		if (page_data){
-			console.log("data is ready");
-			capture_image_url();
-		}
+	console.log("init data");
+	// Check browser support
+	if (typeof(Storage) != "undefined") {
+		    page_data = JSON.parse(localStorage.getItem('page_data'));
+		    if(page_data){
+		    	console.log("exist");
+		    capture_image_url();
+		    }
+		    else {
+		    	console.log("not exist");
+		    	page_data=[];
+		    }
+		} 
 		else {
-			console.log("data is not ready");
 		}
-	});
-}
+	}
 $(document).ready(function() {
 	initData();
 });

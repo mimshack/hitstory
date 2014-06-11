@@ -4,10 +4,11 @@ var tabIsChanged = false;
 var tabIsRefreshed = false;
 var tabID = 0;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.msg == 'capture'){
 	chrome.tabs.getSelected(null, function(tab) {
 		tabID = tab.id;
 	});
+	// var notification = webkitNotifications.createNotification('48.png', 'Tab Alert', 'tab is changed');
+				// notification.show();
 	chrome.tabs.captureVisibleTab(null, {}, function(dataUrl) {
 		sendResponse({
 			imgSrc : dataUrl,
@@ -18,17 +19,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 			tabInfoRefresh : tabIsRefreshed
 		});
 	});
-	return true;
-	}
-	if (request.data == 'data'){
-		var data = [];
-		chrome.storage.sync.get('page_data', function(result) {
-			 sendResponse({
-				data : result.page_data
-			});
-		});
-	return true;
-	}
 	return false;
 });
 // on tab created
@@ -57,6 +47,7 @@ chrome.tabs.onReplaced.addListener(function(tab) {
 	chrome.tabs.getSelected(null, function(tab) {
 		tabID = tab.id;
 	});
+
 	tabIsRefreshed = true;
 });
 // chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
