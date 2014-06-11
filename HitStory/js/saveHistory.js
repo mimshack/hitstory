@@ -95,15 +95,10 @@ function capture_image_url() {
 	
 }
 function manipulateDB(){
-	if (!page_data){
-		var where = _.findWhere(page_data, {
-		is_root : true,
-		tab_id : tabSelected,
-		closed : false
-		});
-		if (where) saveChild();
-		else saveData();
-	}
+	console.log("sql");
+	var where = _.findWhere(page_data, {is_root : true,tab_id : tabSelected,closed : false});
+	console.log("where",where);
+	if (where) saveChild();
 	else saveData();
 }
 function saveChild() {
@@ -176,6 +171,13 @@ function initData(){
 		    	capture_image_url();
 		    }
 	}
+	
+function sql(){
+	for (var i=0; i<page_data.length;i++){
+		consloe.log(page_data[i].title);
+	}	
+}
 $(document).ready(function() {
 	initData();
+	//sql();
 });
