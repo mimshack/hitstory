@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 			tabInfoRefresh : tabIsRefreshed
 		});
 	});
-	return false;
+	return true;
 });
 // on tab created
 chrome.tabs.onCreated.addListener(function(tab) {

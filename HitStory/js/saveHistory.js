@@ -45,17 +45,23 @@ var tabRefreshed = false;
 var tabSelected = 0;
 function addToStorage() {
 // Store
-	localStorage.setItem('page_data', JSON.stringify(page_data));
+	//localStorage.setItem('page_data', JSON.stringify(page_data));
+	chrome.storage.local.set({
+		'page_data' : page_data
+	});
 	displayStorage();
 }
 function addChildToStorage() {
 	// Store
-	localStorage.setItem('page_data',  JSON.stringify(page_data));
+	//localStorage.setItem('page_data',  JSON.stringify(page_data));
+	chrome.storage.local.set({
+		'page_data' : page_data
+	});
 	displayStorage();
 }
 
 function getStorage() {
-	chrome.storage.sync.get('page_data', function(result) {
+	chrome.storage.local.get('page_data', function(result) {
 		page_data = result.page_data;
 	});
 	displayStorage();
@@ -149,8 +155,10 @@ function getPageIcon() {
 function initData(){
 	console.log("init data");
 	// Check browser support
-	if (typeof(Storage) != "undefined") {
-		    page_data = JSON.parse(localStorage.getItem('page_data'));
+	chrome.storage.local.get('page_data', function(result) {
+		page_data = result.page_data;
+	});
+		    //page_data = JSON.parse(localStorage.getItem('page_data'));
 		    if(page_data){
 		    	console.log("exist");
 		    	capture_image_url();
@@ -160,10 +168,6 @@ function initData(){
 		    	page_data=[];
 		    	capture_image_url();
 		    }
-		} 
-		else {
-			console.log("html5 not supported");
-		}
 	}
 $(document).ready(function() {
 	initData();
