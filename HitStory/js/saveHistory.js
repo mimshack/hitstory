@@ -90,7 +90,11 @@ function capture_image_url() {
 		tabChanged = response.tabInfoChange;
 		console.log("tab refreshed " + response.tabInfoRefresh);
 		tabRefreshed = response.tabInfoRefresh;
+		manipulateDB();
 	});
+	
+}
+function manipulateDB(){
 	if (!page_data){
 		var where = _.findWhere(page_data, {
 		is_root : true,
@@ -102,7 +106,6 @@ function capture_image_url() {
 	}
 	else saveData();
 }
-
 function saveChild() {
 	// check if it's a child
 	var where = _.findWhere(page_data, {
@@ -120,7 +123,9 @@ function saveChild() {
 			image_url = getPageIcon();
 		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
 		page_data[loc].children.push(isChild);
-
+chrome.storage.local.set({
+		'page_data' : page_data
+	});
 		addChildToStorage();
 	
 	}
@@ -135,7 +140,9 @@ function saveData() {
 		image_url = getPageIcon();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	page_data.push(add_data);
-
+chrome.storage.local.set({
+		'page_data' : page_data
+	});
 	addToStorage();
 
 }
