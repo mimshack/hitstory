@@ -43,14 +43,12 @@ var tabClosed = false;
 var tabChanged = false;
 var tabRefreshed = false;
 var tabSelected = 0;
-function addToStorage(add_data) {
-	page_data.push(add_data);
+function addToStorage() {
 // Store
 	localStorage.setItem('page_data', JSON.stringify(page_data));
 	displayStorage();
 }
-function addChildToStorage(add_data) {
-	page_data[loc].children.push(add_data);
+function addChildToStorage() {
 	// Store
 	localStorage.setItem('page_data',  JSON.stringify(page_data));
 	displayStorage();
@@ -69,6 +67,7 @@ function displayStorage() {
 }
 
 function capture_image_url() {
+	console.log("cupture image");
 	chrome.runtime.sendMessage({
 		msg : "capture"
 	}, function(response) {
@@ -85,7 +84,8 @@ function capture_image_url() {
 		tabChanged = response.tabInfoChange;
 		console.log("tab refreshed " + response.tabInfoRefresh);
 		tabRefreshed = response.tabInfoRefresh;
-		if (!page_data){
+	});
+	if (!page_data){
 		var where = _.findWhere(page_data, {
 		is_root : true,
 		tab_id : tabSelected,
@@ -93,9 +93,8 @@ function capture_image_url() {
 		});
 		if (where) saveChild();
 		else saveData();
-		}
-		else saveData();
-	});
+	}
+	else saveData();
 }
 
 function saveChild() {
@@ -105,7 +104,7 @@ function saveChild() {
 		tab_id : tabSelected,
 		closed : false
 	});
-	loc= _.indexOf(page_data,where)+1;
+	var loc= _.indexOf(page_data,where)+1;
 	if (where) {
 		if (window.location.href.indexOf("chrome-extension") != -1)
 			return;
@@ -116,7 +115,7 @@ function saveChild() {
 		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
 		page_data[loc].children.push(isChild);
 
-		addChildToStorage(isChild);
+		addChildToStorage();
 	
 	}
 }
@@ -131,7 +130,7 @@ function saveData() {
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	page_data.push(add_data);
 
-		addToStorage(add_data);
+	addToStorage();
 
 }
 
@@ -154,14 +153,16 @@ function initData(){
 		    page_data = JSON.parse(localStorage.getItem('page_data'));
 		    if(page_data){
 		    	console.log("exist");
-		    capture_image_url();
+		    	capture_image_url();
 		    }
 		    else {
 		    	console.log("not exist");
 		    	page_data=[];
+		    	capture_image_url();
 		    }
 		} 
 		else {
+			console.log("html5 not supported");
 		}
 	}
 $(document).ready(function() {
