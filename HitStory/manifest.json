@@ -2,8 +2,8 @@
   "name": "HitStory",
   "description": "save history pages hierarchy.",
   "version": "1.0",
+  "content_security_policy" : "default-src 'self';   script-src 'self' ;   connect-src 'self' http: https: chrome-extension:;   frame-src http: https:",
   "web_accessible_resources": ["js/underscore.min.js"],
-
 "browser_action": {
        "default_icon": "images/icon-19.png",  
        "default_title": "HitStory",      // optional; shown in tooltip
@@ -37,7 +37,7 @@
 	},
   "content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/popup.js","js/underscore.min.js"],
+		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/popup.js"],
 		"css": ["css/page.css"]
   }],
   "manifest_version": 2
