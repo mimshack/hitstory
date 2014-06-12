@@ -7,8 +7,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	chrome.tabs.getSelected(null, function(tab) {
 		tabID = tab.id;
 	});
-	// var notification = webkitNotifications.createNotification('48.png', 'Tab Alert', 'tab is changed');
-				// notification.show();
 	chrome.tabs.captureVisibleTab(null, {}, function(dataUrl) {
 		sendResponse({
 			imgSrc : dataUrl,

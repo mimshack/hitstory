@@ -96,20 +96,21 @@ function capture_image_url() {
 }
 function manipulateDB(){
 	console.log("sql");
-	var where = _.findWhere(page_data, {is_root : true,tab_id : tabSelected,closed : false});
-	console.log("where",where);
-	if (where) saveChild();
+	var check =0;
+	//var where = _.findWhere(page_data, {is_root : true,tab_id : tabSelected,closed : false});
+	for(i=0;i<page_data.length;i++){
+		if (page_data[i].is_root==true && page_data[i].tab_id== tabSelected && page_data[i].closed ==false){
+			check =1;
+			loc=i;
+			break;
+		}
+	}
+	console.log("check",check);
+	if (check) saveChild();
 	else saveData();
 }
 function saveChild() {
 	// check if it's a child
-	var where = _.findWhere(page_data, {
-		is_root : true,
-		tab_id : tabSelected,
-		closed : false
-	});
-	var loc= _.indexOf(page_data,where)+1;
-	if (where) {
 		if (window.location.href.indexOf("chrome-extension") != -1)
 			return;
 		if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
@@ -123,7 +124,6 @@ chrome.storage.local.set({
 	});
 		addChildToStorage();
 	
-	}
 }
 
 function saveData() {
