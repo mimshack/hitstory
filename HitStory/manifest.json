@@ -2,7 +2,6 @@
   "name": "HitStory",
   "description": "save history pages hierarchy.",
   "version": "1.0",
-  "content_security_policy" : "default-src 'self';   script-src 'self' ;   connect-src 'self' http: https: chrome-extension:;   frame-src http: https:",
   "web_accessible_resources": ["js/underscore.min.js","js/d3.min.js","js/underscore-min.map"],
 "browser_action": {
        "default_icon": "images/icon-19.png",  
