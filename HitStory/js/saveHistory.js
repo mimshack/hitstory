@@ -1,21 +1,22 @@
 function getObjects(obj, key, val) {
-    var objects = [];
-    for (var i in obj) {
-        if (!obj.hasOwnProperty(i)) continue;
-        if (typeof obj[i] == 'object') {
-            objects = objects.concat(getObjects(obj[i], key, val));
-        } else if (i == key && obj[key] == val) {
-            objects.push(obj);
-        }
-    }
-    return objects;
+	var objects = [];
+	for (var i in obj) {
+		if (!obj.hasOwnProperty(i))
+			continue;
+		if ( typeof obj[i] == 'object') {
+			objects = objects.concat(getObjects(obj[i], key, val));
+		} else if (i == key && obj[key] == val) {
+			objects.push(obj);
+		}
+	}
+	return objects;
 }
 
 // takes 6 params returns 1 json type class
 
 function createTabClass(tab_id, created, active_time, closed, title, url, is_root, children, image_url) {
 	var tab_class = {
-	    id:page_data.length,
+		id : page_data.length,
 		tab_id : tab_id,
 		created : created, // check javasacript Date()
 		active_time : active_time, //chrome events onActivated
@@ -44,13 +45,14 @@ var tabChanged = false;
 var tabRefreshed = false;
 var tabSelected = 0;
 function addToStorage() {
-// Store
+	// Store
 	//localStorage.setItem('page_data', JSON.stringify(page_data));
 	chrome.storage.local.set({
 		'page_data' : page_data
 	});
 	displayStorage();
 }
+
 function addChildToStorage() {
 	// Store
 	//localStorage.setItem('page_data',  JSON.stringify(page_data));
@@ -73,7 +75,6 @@ function displayStorage() {
 }
 
 function capture_image_url() {
-	console.log("cupture image");
 	chrome.runtime.sendMessage({
 		msg : "capture"
 	}, function(response) {
@@ -85,45 +86,50 @@ function capture_image_url() {
 		console.log("if new tab created " + response.tabInfoOpen);
 		tabOpened = response.tabInfoOpen;
 		console.log("tab closed " + response.tabInfoClose);
-		tabClosed = false; //response.tabInfoClose; // temporary
+		tabClosed = false;
+		//response.tabInfoClose; // temporary
 		console.log("tab changed " + response.tabInfoChange);
 		tabChanged = response.tabInfoChange;
 		console.log("tab refreshed " + response.tabInfoRefresh);
 		tabRefreshed = response.tabInfoRefresh;
 		manipulateDB();
 	});
-	
+
 }
-function manipulateDB(){
-	console.log("sql");
-	var check =0;
+
+function manipulateDB() {
+	console.log("db query");
+	var check = 0;
 	//var where = _.findWhere(page_data, {is_root : true,tab_id : tabSelected,closed : false});
-	for(i=0;i<page_data.length;i++){
-		if (page_data[i].is_root==true && page_data[i].tab_id== tabSelected && page_data[i].closed ==false){
-			check =1;
-			loc=i;
+	for ( i = page_data.length-1; 0 <= i ; i--) {
+		if (page_data[i].is_root == true && page_data[i].tab_id == tabSelected && page_data[i].closed == false) {
+			check = 1;
+			loc = page_data[i].id;
 			break;
 		}
 	}
-	console.log("check",check);
-	if (check) saveChild();
-	else saveData();
+	console.log("check", check);
+	if (check)
+		saveChild();
+	else
+		saveData();
 }
+
 function saveChild() {
 	// check if it's a child
-		if (window.location.href.indexOf("chrome-extension") != -1)
-			return;
-		if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
-			return;
-		if (getPageIcon())
-			image_url = getPageIcon();
-		isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
-		page_data[loc].children.push(isChild);
-chrome.storage.local.set({
+	if (window.location.href.indexOf("chrome-extension") != -1)
+		return;
+	if (window.location.href == "www.google.co.il" || window.location.href == "www.google.com")
+		return;
+	if (getPageIcon())
+		image_url = getPageIcon();
+	isChild = createTabClass(tabSelected, new Date().getTime(), "active_time", false, document.title, window.location.href, false, false, image_url);
+	page_data[loc].children.push(isChild);
+	chrome.storage.local.set({
 		'page_data' : page_data
 	});
-		addChildToStorage();
-	
+	addChildToStorage();
+
 }
 
 function saveData() {
@@ -135,11 +141,15 @@ function saveData() {
 		image_url = getPageIcon();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	page_data.push(add_data);
-chrome.storage.local.set({
+	chrome.storage.local.set({
 		'page_data' : page_data
 	});
 	addToStorage();
 
+}
+
+function updateTabClosed(tabid) {
+	alert(tabid);
 }
 
 function getPageIcon() {
@@ -154,30 +164,30 @@ function getPageIcon() {
 		}
 	}
 }
-function initData(){
+
+function initData() {
 	console.log("init data");
 	// Check browser support
 	chrome.storage.local.get('page_data', function(result) {
 		page_data = result.page_data;
 	});
-		    //page_data = JSON.parse(localStorage.getItem('page_data'));
-		    if(page_data){
-		    	console.log("exist");
-		    	capture_image_url();
-		    }
-		    else {
-		    	console.log("not exist");
-		    	page_data=[];
-		    	capture_image_url();
-		    }
+	//page_data = JSON.parse(localStorage.getItem('page_data'));
+	if (page_data) {
+		console.log("exist");
+		capture_image_url();
+	} else {
+		console.log("not exist");
+		page_data = [];
+		capture_image_url();
 	}
-	
-function sql(){
-	for (var i=0; i<page_data.length;i++){
-		consloe.log(page_data[i].title);
-	}	
 }
+
+function closeTab() {
+	for ( i = 0; i < page_data.length; i++) {
+		//consloe.log(page_data[i].title);
+	}
+}
+
 $(document).ready(function() {
 	initData();
-	//sql();
 });

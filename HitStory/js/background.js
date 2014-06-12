@@ -19,19 +19,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	});
 	return true;
 });
+// on tab onRemoved
+chrome.tabs.onRemoved.addListener(function(tab) {
+	chrome.tabs.getSelected(null, function(tab) {
+		tabID = tab.id;
+	});
+	tabIsClosed=true;
+});
 // on tab created
 chrome.tabs.onCreated.addListener(function(tab) {
 	chrome.tabs.getSelected(null, function(tab) {
 		tabID = tab.id;
 	});
 	tabIsOpened = true;
-});
-// on tab onRemoved
-chrome.tabs.onRemoved.addListener(function(tab) {
-	chrome.tabs.getSelected(null, function(tab) {
-		tabID = tab.id;
-	});
-	tabIsClosed = true;
 });
 // tabs change to another
 chrome.tabs.onActiveChanged.addListener(function(tab) {
@@ -45,7 +45,6 @@ chrome.tabs.onReplaced.addListener(function(tab) {
 	chrome.tabs.getSelected(null, function(tab) {
 		tabID = tab.id;
 	});
-
 	tabIsRefreshed = true;
 });
 // chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
