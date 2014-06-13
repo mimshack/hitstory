@@ -1,5 +1,27 @@
+ //d3 timeline js doc can be found here https://github.com/jiahuang/d3-timeline#method-calls 
+ //d3 regular docs can be found here https://github.com/mbostock/d3/wiki/Selections
+ 
+ var testData = [
+        {times: [{"starting_time": 1355752800000, "ending_time": 1355759900000}, {"starting_time": 1355767900000, "ending_time": 1355774400000}]},
+        {times: [{"starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
+        {times: [{"starting_time": 1355761910000, "ending_time": 1355763910000}]},
+      ];
+      var width = 900;
+function timelineCircle() {
+        var chart = d3.timeline()
+          .tickFormat( //
+            {format: d3.time.format("%I %p"),
+            tickTime: d3.time.hours,
+            tickInterval: 1,
+            tickSize: 30})
+          .display("circle"); // toggle between rectangles and circles
+
+        var svg = d3.select("#timeline2").append("svg").attr("width", width)
+          .datum(testData).call(chart);
+      }
+
 $(document).ready(function() {
-$('body').append('<h1>Loading</h1>');
+$('body').append('<h1 id="loader">Loading</h1>');
 setTimeout(function() {
     
 	var tmp_db=page_data;
@@ -93,6 +115,10 @@ setTimeout(function() {
 
 		console.log("*********** function end.");
 	}//--end 1st for --
+	// start all chrome storage ready functions
+	$('#loader').remove();
+    timelineCircle();
+    
 	}, 4000);
 }); 
 

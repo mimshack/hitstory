@@ -8,6 +8,30 @@
 		<link type="text/css" rel="stylesheet" href="css/hirarchy.css" media="all">
 		
 	</head>
+	<style>
+	.axis path,.axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+    }
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 10px;
+    }
+
+    .timeline-label {
+      font-family: sans-serif;
+      font-size: 12px;
+    }
+	#timeline2 .axis {
+      transform: translate(0px,30px);
+      -ms-transform: translate(0px,30px); /* IE 9 */
+      -webkit-transform: translate(0px,30px); /* Safari and Chrome */
+      -o-transform: translate(0px,30px); /* Opera */
+      -moz-transform: translate(0px,30px); /* Firefox */
+    }
+	</style>
 	<body class="html not-front no-sidebars page-overview section-overview page-views bop-chrome">
 		<div id="page">
 			<div id="main">
@@ -20,9 +44,15 @@
 				</div>
 			</div>
 		</div>
+		<div class="chart">
+			
+		</div>
+		<div id="timeline2"></div>
 	</body>
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/saveHistory.js"></script>
 	<script src="js/popup.js"></script>
+	<script src="js/d3.min.js"></script>
+    <script src="js/d3-timeline.js"></script>
 	<script src="js/hirarchy_scripts.js"></script>
 </html>
