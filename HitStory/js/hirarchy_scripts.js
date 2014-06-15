@@ -81,18 +81,21 @@ setTimeout(function() {
 		var items_row = document.createElement("div");
 		items_row.className = "overview-items-row even";
 
-		for ( j = 0; j < 6; j++) {
+		for ( j = 0; j < tmp_db[i].children.length ; j++) {
 			var item = document.createElement("div");
 			item.className = "cluster-overview-item";
 
 			var hexagon = document.createElement("div");
 			hexagon.className = "cluster-overview-item-hexagon";
-
+			//hexagon.css('background', 'red');
 			var link = document.createElement("a");
-			link.setAttribute('href', url);
+			link.setAttribute('href', tmp_db[i].children[j].url);
 			link.id = "cluster-overview-item";
+			//link.css('background-image', 'url(' + tmp_db[i].children[j].img_url + ')');
 			link.setAttribute('data-mf-related', "");
-
+			/* */
+			link.style.backgroundImage = 'url(' + tmp_db[i].children[j].img_url + ')';
+			/* */
 			hexagon.appendChild(link);
 			item.appendChild(hexagon);
 			items_row.appendChild(item);

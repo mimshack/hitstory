@@ -139,8 +139,11 @@ function saveData() {
 		return;
 	if (getPageIcon())
 		image_url = getPageIcon();
+	//else image_url = getBiggestImage();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
+	
 	page_data.push(add_data);
+	
 	chrome.storage.local.set({
 		'page_data' : page_data
 	});
@@ -151,7 +154,18 @@ function saveData() {
 function updateTabClosed(tabid) {
 	alert(tabid);
 }
-
+function getBiggestImage(){
+	var images = $("img");
+	var image= document.createElement("img");
+	image.height=0;
+	image.width=0;
+	for(var i =0;i<images.length;i++){
+		if(image.width<images[i].width){
+			image = images[i];
+		}
+	}
+	return image;
+}
 function getPageIcon() {
 	var links = document.head.getElementsByTagName('link');
 	for (var link in links) {
