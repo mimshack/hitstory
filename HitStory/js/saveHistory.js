@@ -44,6 +44,7 @@ var tabClosed = false;
 var tabChanged = false;
 var tabRefreshed = false;
 var tabSelected = 0;
+var allTabs=[];
 function addToStorage() {
 	// Store
 	//localStorage.setItem('page_data', JSON.stringify(page_data));
@@ -71,7 +72,9 @@ function getStorage() {
 }
 
 function displayStorage() {
+	checkTabClosed();
 	console.table(page_data);
+	
 }
 
 function capture_image_url() {
@@ -92,6 +95,8 @@ function capture_image_url() {
 		tabChanged = response.tabInfoChange;
 		console.log("tab refreshed " + response.tabInfoRefresh);
 		tabRefreshed = response.tabInfoRefresh;
+		console.log("all tabs " + response.tabArr);
+		allTabs = response.tabArr;
 		manipulateDB();
 	});
 
@@ -108,7 +113,7 @@ function manipulateDB() {
 			break;
 		}
 	}
-	console.log("check", check);
+	console.log("if child", check);
 	if (check)
 		saveChild();
 	else
@@ -148,7 +153,6 @@ function saveData() {
 		'page_data' : page_data
 	});
 	addToStorage();
-
 }
 
 function updateTabClosed(tabid) {
@@ -205,3 +209,18 @@ function closeTab() {
 $(document).ready(function() {
 	initData();
 });
+
+function checkTabClosed(){
+	var check=0;
+	for ( i = 0; i < page_data.length ; i++) {
+		for(j=0 ; j< allTabs.length;j++){
+			if (page_data[i].tab_id == allTabs[j]){
+				check=1;
+			}
+		}
+		if (check == 0){
+			page_data[i].closed= new Date().getTime();
+		}
+		check=0;
+	}
+}
