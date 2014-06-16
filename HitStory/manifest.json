@@ -2,11 +2,11 @@
   "name": "HitStory",
   "description": "save history pages hierarchy.",
   "version": "1.0",
-  "web_accessible_resources": ["js/underscore.min.js","js/d3.min.js","js/d3.v3.min.js","js/d3-timeline.js","js/underscore-min.map"],
+  "web_accessible_resources": ["js/underscore.min.js","js/d3.min.js","js/d3.v3.min.js","js/underscore-min.map"],
   "browser_action": {
        "default_icon": "images/icon-19.png",  
        "default_title": "HitStory",      // optional; shown in tooltip
-       "default_popup": "page.html"        // optional
+       "default_popup": "page.html"      // optional
   },
  "permissions": [
  	"tabs" ,
@@ -36,7 +36,7 @@
 	},
   "content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/popup.js","js/d3.min.js","js/d3.v3.min.js","js/d3-timeline.js"],
+		"js": ["js/jquery-1.10.2.min.js","js/saveHistory.js","js/popup.js","js/d3-timeline.js"],
 		"css": ["css/page.css"]
   }],
   "manifest_version": 2

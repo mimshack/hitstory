@@ -74,7 +74,6 @@ function getStorage() {
 function displayStorage() {
 	checkTabClosed();
 	console.table(page_data);
-	
 }
 
 function capture_image_url() {
