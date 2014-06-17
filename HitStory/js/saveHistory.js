@@ -222,4 +222,8 @@ function checkTabClosed(){
 		}
 		check=0;
 	}
+	chrome.storage.local.set({
+		'page_data' : page_data
+	});
+	
 }

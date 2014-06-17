@@ -41,7 +41,9 @@ setTimeout(function() {
 	end = new Date().getTime();
 	for ( i = 0; i < tmp_db.length; i++) {
 		//console.log("check values-- created: "+tmp_db[i].created +" close: " + tmp_db[i].closed);
-		mydata.push(Line( tmp_db[i].img_url, tmp_db[i].created , end)); //tmp_db[i].closed
+		if(tmp_db[i].closed)
+		mydata.push(Line( tmp_db[i].img_url, tmp_db[i].created ,tmp_db[i].closed));
+		else mydata.push(Line( tmp_db[i].img_url, tmp_db[i].created ,end)); 
 		var url = tmp_db[i].url;
 		console.log("*********** function start22" + container);
 
