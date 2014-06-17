@@ -1,23 +1,39 @@
  //d3 timeline js doc can be found here https://github.com/jiahuang/d3-timeline#method-calls 
  //d3 regular docs can be found here https://github.com/mbostock/d3/wiki/Selections
- 
- var testData = [
-        {times: [{"starting_time": 1355752800000, "ending_time": 1355759900000}, {"starting_time": 1355767900000, "ending_time": 1355774400000}]},
-        {times: [{"starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
-        {times: [{"starting_time": 1355761910000, "ending_time": 1355763910000}]},
-      ];
-      var width = 900;
-function timelineCircle() {
+var mydata = [];
+function Line(icon,timeStart,timeEnd){
+	var line = {
+		icon: icon,
+		times: [{
+			"starting_time":timeStart,
+			"ending_time":timeEnd
+		}]
+	};
+	return line;
+}
+// mydata.push(Line("jackie.png",1402975304308,1402998503844));
+// mydata.push(Line("jackie.png",1402975762471,1402998503844));
+// mydata.push(Line("jackie.png",1402975770882,1402998503844));
+// mydata.push(Line("jackie.png",1402975771750,1402998503844));
+// var iconTestData = [
+        // {icon: , times: [{"starting_time": , "ending_time": }, 
+        							// {"starting_time": , "ending_time": }]},
+        // {icon: "troll.png", times: [{"starting_time": , "ending_time": }, ]},
+        // {icon: "wat.png", times: [{"starting_time": , "ending_time": }]},
+      // ];
+var start;
+var end;
+var width = $(window).width()-50;
+//https://github.com/jiahuang/d3-timeline   -- all functionality
+function timelineStackedIcons() {
         var chart = d3.timeline()
-          .tickFormat( //
-            {format: d3.time.format("%I %p"),
-            tickTime: d3.time.hours,
-            tickInterval: 1,
-            tickSize: 30})
-          .display("circle"); // toggle between rectangles and circles
-
-        var svg = d3.select("#timeline2").append("svg").attr("width", width)
-          .datum(testData).call(chart);
+          .beginning(start) // we can optionally add beginning and ending times to speed up rendering a little
+          .ending(end)
+          .stack() // toggles graph stacking
+          .margin({left:70, right:30, top:0, bottom:0})
+          ;
+        var svg = d3.select("#timeline5").append("svg").attr("width", width)
+          .datum(mydata).call(chart);
       }
 
 $(document).ready(function() {
@@ -30,8 +46,11 @@ setTimeout(function() {
 	//array
 	var container = document.getElementsByClassName("view-content");
 
+	start=page_data[0].created;
+	end = new Date().getTime();
 	for ( i = 0; i < tmp_db.length; i++) {
-	
+		//console.log("check values-- created: "+tmp_db[i].created +" close: " + tmp_db[i].closed);
+		mydata.push(Line( tmp_db[i].img_url, tmp_db[i].created , end)); //tmp_db[i].closed
 		var url = tmp_db[i].url;
 		console.log("*********** function start22" + container);
 
@@ -134,9 +153,8 @@ setTimeout(function() {
                     // .attr('width', function(d){ return scale_width(d);})
                     // .attr('height', 50)
                     // .attr('y',function(d, i){ return i*70; });
-                    
-    timelineCircle();
-    
+    timelineStackedIcons();
+    console.table(mydata);
 	}, 4000);
 }); 
 
