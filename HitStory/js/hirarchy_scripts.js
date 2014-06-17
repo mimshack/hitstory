@@ -11,22 +11,13 @@ function Line(icon,timeStart,timeEnd){
 	};
 	return line;
 }
-// mydata.push(Line("jackie.png",1402975304308,1402998503844));
-// mydata.push(Line("jackie.png",1402975762471,1402998503844));
-// mydata.push(Line("jackie.png",1402975770882,1402998503844));
-// mydata.push(Line("jackie.png",1402975771750,1402998503844));
-// var iconTestData = [
-        // {icon: , times: [{"starting_time": , "ending_time": }, 
-        							// {"starting_time": , "ending_time": }]},
-        // {icon: "troll.png", times: [{"starting_time": , "ending_time": }, ]},
-        // {icon: "wat.png", times: [{"starting_time": , "ending_time": }]},
-      // ];
 var start;
 var end;
 var width = $(window).width()-50;
 //https://github.com/jiahuang/d3-timeline   -- all functionality
 function timelineStackedIcons() {
         var chart = d3.timeline()
+          .tickFormat({format:d3.time.format("%c") , tickTime: d3.time.dayss , tickInterval:1 , tickSize:6 })
           .beginning(start) // we can optionally add beginning and ending times to speed up rendering a little
           .ending(end)
           .stack() // toggles graph stacking
@@ -136,23 +127,6 @@ setTimeout(function() {
 	}//--end 1st for --
 	// start all chrome storage ready functions
 	$('#loader').remove();
-	// var width = 800;
-	// var height = 800;
-	// var d3_data = [20,40,60];
-	// var scale_width = d3.scale.linear()
-	                   // .domain([0,60])
-	                   // .range([0,width]);
-	// var canvas = d3.select('.chart')
-                // .append("svg")
-                // .attr("width", width )
-                // .attr("height",500);
-    // var bars = canvas.selectAll("rect")
-                // .data(d3_data)
-                // .enter()
-                    // .append('rect')
-                    // .attr('width', function(d){ return scale_width(d);})
-                    // .attr('height', 50)
-                    // .attr('y',function(d, i){ return i*70; });
     timelineStackedIcons();
     console.table(mydata);
 	}, 4000);
