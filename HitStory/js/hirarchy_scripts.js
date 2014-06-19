@@ -27,12 +27,12 @@ function timelineStackedIcons() {
             var colors = chart.colors();
             div.find('.coloredDiv').css('background-color', colors(i));
             //div.find('#name').text(datum.label);
-            var t = _.findWhere(page_data, {img_url: datum.icon , created:datum.times[0]});
+            var t = _.findWhere(page_data, {img_url: datum.icon});//created:datum.times.starting_time OR created:datum.times[0]
             console.log(t);
             div.find('#name').text(t.title);
           })
           .click(function (d, i, datum) {
-            var t = _.findWhere(page_data, {img_url: datum.icon , created:datum.times[0]});
+            var t = _.findWhere(page_data, {img_url: datum.icon});//created:datum.times.starting_time OR created:datum.times[0]
             console.log(t);
             window.open(t.url,"_target");
           })

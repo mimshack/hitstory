@@ -143,7 +143,7 @@ function saveData() {
 		return;
 	if (getPageIcon())
 		image_url = getPageIcon();
-	//else image_url = getBiggestImage();
+	else image_url = getBiggestImage();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	
 	page_data.push(add_data);
@@ -160,14 +160,14 @@ function updateTabClosed(tabid) {
 function getBiggestImage(){
 	var images = $("img");
 	var image= document.createElement("img");
-	image.height=0;
 	image.width=0;
-	for(var i =0;i<images.length;i++){
+	for( i =0;i<images.length;i++){
 		if(image.width<images[i].width){
-			image = images[i];
+			image.src = images[i].src;
+			console.log(image.src);
 		}
 	}
-	return image;
+	return image.src;
 }
 function getPageIcon() {
 	var links = document.head.getElementsByTagName('link');
