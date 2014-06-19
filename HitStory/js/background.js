@@ -10,7 +10,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	var arr = [];
 	chrome.tabs.query( {} ,function (tabs) { // The Query {} was missing here
     for (var i = 0; i < tabs.length; i++) {
-      chrome.tabs.executeScript(tabs[i].id, {code:"document.body.bgColor='red'"});
       arr.push(tabs[i].id);
     }
   });
