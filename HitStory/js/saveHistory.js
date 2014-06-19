@@ -143,7 +143,7 @@ function saveData() {
 		return;
 	if (getPageIcon())
 		image_url = getPageIcon();
-	else image_url = getBiggestImage();
+	// else image_url = getBiggestImage();
 	var add_data = createTabClass(tabSelected, new Date().getTime(), "active_time", tabClosed, document.title, window.location.href, tabOpened, children, image_url);
 	
 	page_data.push(add_data);
@@ -163,7 +163,7 @@ function getBiggestImage(){
 	image.width=0;
 	for( i =0;i<images.length;i++){
 		if(image.width<images[i].width){
-			image.src = images[i].src;
+			image = images[i];
 			console.log(image.src);
 		}
 	}
