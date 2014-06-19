@@ -13,7 +13,7 @@ function Line(icon,timeStart,timeEnd){
 }
 var start;
 var end;
-var width = $(window).width()-50;
+var width = $(window).width()-70;
 //https://github.com/jiahuang/d3-timeline   -- all functionality
 function timelineStackedIcons() {
         var chart = d3.timeline()
@@ -22,6 +22,23 @@ function timelineStackedIcons() {
           .ending(end)
           .stack() // toggles graph stacking
           .margin({left:70, right:30, top:0, bottom:0})
+          .hover(function (d, i, datum) {
+            var div = $('#hoverRes');
+            var colors = chart.colors();
+            div.find('.coloredDiv').css('background-color', colors(i));
+            //div.find('#name').text(datum.label);
+            var t = _.findWhere(page_data, {img_url: datum.icon , created:datum.times[0]});
+            console.log(t);
+            div.find('#name').text(t.title);
+          })
+          .click(function (d, i, datum) {
+            var t = _.findWhere(page_data, {img_url: datum.icon , created:datum.times[0]});
+            console.log(t);
+            window.open(t.url,"_target");
+          })
+          .scroll(function (x, scale) {
+            $("#scrolled_date").text(scale.invert(x) + " to " + scale.invert(x+width));
+          });
           ;
         var svg = d3.select("#timeline5").append("svg").attr("width", width)
           .datum(mydata).call(chart);
@@ -42,7 +59,7 @@ setTimeout(function() {
 	for ( i = 0; i < tmp_db.length; i++) {
 		//console.log("check values-- created: "+tmp_db[i].created +" close: " + tmp_db[i].closed);
 		if(tmp_db[i].closed)
-		mydata.push(Line( tmp_db[i].img_url, tmp_db[i].created ,tmp_db[i].closed));
+		mydata.push(Line( tmp_db[i].img_url , tmp_db[i].created ,tmp_db[i].closed));
 		else mydata.push(Line( tmp_db[i].img_url, tmp_db[i].created ,end)); 
 		var url = tmp_db[i].url;
 		console.log("*********** function start22" + container);

@@ -6,31 +6,31 @@
 		<!-- <link rel="shortcut icon" href="http://www.worldofmatter.net/sites/all/themes/wom/favicon.ico" type="image/vnd.microsoft.icon"> -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes">
 		<link type="text/css" rel="stylesheet" href="css/hirarchy.css" media="all">
-		
+
 	</head>
 	<style>
-	.axis path,.axis line {
-      fill: none;
-      stroke: black;
-      shape-rendering: crispEdges;
-    }
+		.axis path, .axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
 
-    .axis text {
-      font-family: sans-serif;
-      font-size: 10px;
-    }
+		.axis text {
+			font-family: sans-serif;
+			font-size: 10px;
+		}
 
-    .timeline-label {
-      font-family: sans-serif;
-      font-size: 12px;
-    }
+		.timeline-label {
+			font-family: sans-serif;
+			font-size: 12px;
+		}
 		#timeline2 .axis {
-      transform: translate(0px,30px);
-      -ms-transform: translate(0px,30px); /* IE 9 */
-      -webkit-transform: translate(0px,30px); /* Safari and Chrome */
-      -o-transform: translate(0px,30px); /* Opera */
-      -moz-transform: translate(0px,30px); /* Firefox */
-    }
+			transform: translate(0px,30px);
+			-ms-transform: translate(0px,30px); /* IE 9 */
+			-webkit-transform: translate(0px,30px); /* Safari and Chrome */
+			-o-transform: translate(0px,30px); /* Opera */
+			-moz-transform: translate(0px,30px); /* Firefox */
+		}
 	</style>
 	<body class="html not-front no-sidebars page-overview section-overview page-views bop-chrome">
 		<div id="page">
@@ -38,21 +38,29 @@
 				<div id="content" class="column" role="main">
 					<div class="view view-cluster-overview view-id-cluster_overview view-display-id-page">
 						<div class="view-content">
-							
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="chart">
-			
+		<div id="timeline5" style="margin-left: 30px"></div>
+		<div class="chart" style="margin-left: 30px">
+			<br>
+			<div id="hoverRes">
+				<div id="name"></div>
+				<br>
+				<!-- <div class="coloredDiv"></div>
+				<br> -->
+				<div id="scrolled_date"></div>
+				<br>
+			</div>
 		</div>
-		<div id="timeline5"></div>
 	</body>
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/saveHistory.js"></script>
 	<script src="js/popup.js"></script>
 	<script src="js/d3.min.js"></script>
-    <script src="js/d3-timeline.js"></script>
+	<script src="js/d3-timeline.js"></script>
 	<script src="js/hirarchy_scripts.js"></script>
 </html>
