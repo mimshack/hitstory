@@ -9,6 +9,11 @@ body{
 	top: -100px;
 	left:-90px;
 }
+.row_gap{
+	position:relative;
+	top: -100px;
+	left:-20px;
+}
 #loader{
 	padding:10px;
 	background-color: #1abc9c;

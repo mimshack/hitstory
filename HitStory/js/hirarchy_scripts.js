@@ -65,7 +65,8 @@ setTimeout(function() {
 		console.log("*********** function start22" + container);
 
 		var row = document.createElement("div");
-		row.className = "row";
+		if (i%2 ==0)   row.className = "row";
+		else row.className = "row_gap";
 
 		var head_container = document.createElement("div");
 		head_container.className = "cluster-teaser";
