@@ -95,7 +95,13 @@ body {
 	height: 683px;
 	top:0;
 }
-
+#download{
+	position: absolute;
+	top: 580px;
+	left: 155px;
+	width:220px;
+	height: 60px;
+}
 /*.prev a, .next a {
     display:table-cell;
     vertical-align:middle;
