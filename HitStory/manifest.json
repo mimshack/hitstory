@@ -21,7 +21,6 @@
         "notifications",
         "http://*/*",
         "https://*/*",
-        "file://*/*",
         "<all_urls>",
         "background"
     ],
